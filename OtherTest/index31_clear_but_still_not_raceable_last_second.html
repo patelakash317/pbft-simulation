@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style type="text/css">
+    html{
+      /*background: #000;*/
+    }
+    #greenR1toR3, #greenR1toR2, #greenR3toR2, #greenR2toR3, #greenR3toR1, #greenR2toR1 {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      /*background: #000;*/
+      background-image: url('./correct.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      z-index: 5;
+    }
+    #greenR1toR3{
+      top: 162px;
+      left: 344px;
+    }
+    #greenR1toR2{
+      top: 162px;
+      left: 410px;
+    }
+    #greenR3toR2{
+      top: 475px;
+      left: 170px;
+    }
+    #greenR2toR3{
+      top: 475px;
+      left: 625px;
+    }
+    
+    #greenR3toR1{
+      background-image: url('./correctAngel.png');
+      top: 405px;
+      left: 165px;
+    }
+    #greenR2toR1{
+      background-image: url('./correctAngel.png');
+      top: 405px;
+      left: 625px;
+    }
+
+    .hide{
+      display: none;
+    }
+    .motion-path-demo.a2a, .motion-path-demo.a3a{
+      position: absolute;
+      background: transparent;
+      left: 7px;
+    }
+    section{
+      position: absolute;
+      top: -60px;
+      left: -40px;
+    }
+    .img1{
+      position: absolute;
+      /*left: 26%;
+      top: 20%;*/
+      left: 46%;
+      top: 16%;
+    }
+    .img2{
+      position: absolute;
+      /*top: 67%;
+      left: 48%;*/
+      top: 57%;
+      right: 22px;
+    }
+    .img3{
+      position: absolute;
+      /*top: 68%;
+      left: 8.5%;*/
+      top: 60%;
+      left: 12.5%;
+    }
+    button, #clickMe{
+      z-index: 5;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <img class="img1" src="./honest_last.png" width="80" width="80">
+    <img class="img2" src="./honest_last.png" width="80" width="80">
+    <img class="img3" src="./malice_last.png" width="80" width="80">
+    <!-- <article> -->
+      <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
+        <path fill="none" stroke="#000" d="M 354 186 L 169 439"/>
+        <text x="354" y="215" fill="green">Primary node <tspan x="354" y="235">(Replica 1)</tspan></text>
+      </svg>
+      <!-- <div class="greenR2toR3"></div> -->
+      <svg class="motion-path-demo a2a" width="750" height="750" viewBox="0 0 750 750" style="left: 0;">
+        <path fill="none" stroke="#000" d="M 198 489 L 635 486"/>
+        <text x="655" y="520" fill="green">Backup node <tspan x="655" y="540">(Replica 2)</tspan></text>
+      </svg>
+      <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
+        <path fill="none" stroke="#000" d="M 420 185 L 635 428"/>
+        <text x="85" y="540" fill="red">Backup node <tspan x="85" y="560">(Replica 3)</tspan></text>
+      </svg>
+      <div id="greenR1toR3"></div>
+      <div id="greenR1toR2"></div>
+      <div id="greenR3toR2" class="hide"></div>
+      <div id="greenR2toR3" class="hide"></div>
+      <div id="greenR3toR1" class="hide"></div>
+      <div id="greenR2toR1" class="hide"></div>
+    <!-- </article> -->
+  </section>
+  <!-- <div id="controls">
+    <button class="play">Play</button>
+    <button class="pause">Pause</button>
+  </div> -->
+</body>
+
+<!-- <script src="./animate.js"></script> -->
+<!-- <script src="./animate.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+<script type="text/javascript">
+  const line_r1_r2_timeout = 2000;
+  const line_r2_r3_timeout = 3000;
+  const line_r3_r1_timeout = 3000;
+  let message_r1_r3, message_r1_r2, message_r3_r2, message_r2_r3, message_r3_r1, message_r2_r1; // messages
+  let processed_r3_r2 = false;
+  let processed_r1_r3 = false;
+  let processed_r2_r3 = false;
+
+  // Message R1 to R3 - Propose, Prepare, Commit
+    function sendR1toR3() {
+      message_r1_r3 = anime.timeline({
+        easing: 'linear',
+        duration: line_r3_r1_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          message_r1_r3.reverse();
+          message_r1_r3.play();
+          if(processed_r1_r3 === false){
+            $('#greenR1toR3').css('background-image', 'url("./misleading.png")');
+          }
+          processed_r1_r3 = true;
+
+          sendR3toR2(processed_r3_r2);
+          processed_r3_r2 = true;
+
+          setTimeout(function() {
+            $('#greenR1toR3').css('background-image', 'url("./correctEvil.png")');
+            sendR3toR1();
+
+            setTimeout(function() {
+              message_r1_r3.pause();
+            }, line_r3_r1_timeout);
+          }, line_r3_r1_timeout);
+        }
+      }).add({
+        targets: '#greenR1toR3',
+        translateX: -180,
+        translateY: 244
+        
+        // offset: '-=300', // <--- added offset.
+        // translateX: [5, -184],
+        // translateY: [5, 244],
+      });
+    }
+    sendR1toR3();
+    function sendR3toR1() {
+      $('#greenR3toR1').css('background-image', 'url("./misleadingAngel.png")');
+      $('#greenR3toR1').removeClass('hide');
+      message_r3_r1 = anime.timeline({
+        easing: 'linear',
+        duration: line_r3_r1_timeout
+      }).add({
+        targets: '#greenR3toR1',
+        translateX: 180,
+        translateY: -250
+      });
+    }
+
+  // Message R1 to R2 - Propose, Prepare, Commit
+    function sendR1toR2() {
+      message_r1_r2 = anime.timeline({
+        easing: 'linear',
+        duration: line_r1_r2_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          message_r1_r2.reverse();
+          message_r1_r2.play();
+          sendR2toR3(processed_r2_r3);
+          processed_r2_r3 = true;
+
+          setTimeout(function() {
+            sendR2toR1();
+            $('#greenR1toR2').css('background-image', 'url("./correctAngel.png")');
+            setTimeout(function() {
+              message_r1_r2.pause();
+            }, line_r1_r2_timeout);
+          }, line_r1_r2_timeout);
+        }
+      }).add({
+        targets: '#greenR1toR2',
+        translateX: 190,
+        translateY: 224
+      });
+    }
+    sendR1toR2();
+    function sendR2toR1() {
+      $('#greenR2toR1').removeClass('hide');
+      message_r2_r1 = anime.timeline({
+        easing: 'linear',
+        duration: line_r1_r2_timeout
+      }).add({
+        targets: '#greenR2toR1',
+        translateX: -230,
+        translateY: -245
+      });
+    }
+
+  // Message R2 to R3 - Propose, Prepare, Commit
+    function sendR3toR2(processed_r3_r2) {
+      if(processed_r3_r2 === false){
+        $('#greenR3toR2').css('background-image', 'url("./misleading.png")');
+        $('#greenR3toR2').removeClass('hide');
+        message_r3_r2 = anime.timeline({
+          easing: 'linear',
+          duration: line_r2_r3_timeout,
+          begin: function(anim) {
+            // console.log("began : " + anim.began);
+          },
+          complete: function(anim) {
+            $('#greenR3toR2').css('background-image', 'url("./correctEvil.png")');
+            message_r3_r2.reverse();
+            message_r3_r2.play();
+
+            setTimeout(function() {
+              message_r3_r2.pause();
+            }, (line_r2_r3_timeout));
+          }
+        }).add({
+          targets: '#greenR3toR2',
+          translateX: 455
+        });
+      }
+    }
+    function sendR2toR3(processed_r2_r3) {
+      if(processed_r2_r3 === false){
+        $('#greenR2toR3').removeClass('hide');
+        message_r2_r3 = anime.timeline({
+          easing: 'linear',
+          duration: line_r2_r3_timeout,
+          begin: function(anim) {
+            // console.log("began : " + anim.began);
+          },
+          complete: function(anim) {
+            $('#greenR2toR3').css('background-image', 'url("./misleadingAngel.png")');
+            // $('#greenR2toR3').css('background-image', 'url("./correctAngel.png")');
+            message_r2_r3.reverse();
+            message_r2_r3.play();
+            
+            setTimeout(function() {
+              message_r2_r3.pause();
+            }, (line_r2_r3_timeout));
+          }
+        }).add({
+          targets: '#greenR2toR3',
+          translateX: -455
+        });
+      }
+    }
+  
+  // $('.play').on('click', function() {
+  //   console.log('Playing');
+  //   t1.play();
+  // });
+  // $('.pause').on('click', function() {
+  //   console.log('Paused');
+  //   t1.pause();
+  // });
+</script>
+</html>

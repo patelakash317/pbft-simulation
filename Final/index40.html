@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style type="text/css">
+    html{
+      /*background: #000;*/
+    }
+    .common_green{
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      /*background: #000;*/
+      background-image: url('../correct.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      z-index: 5;
+    }
+
+    /*// R1 -> R2, R3, R4 Propose*/
+      #greenR1toR2{
+        top: 189px;
+        left: 124px;
+      }
+      #greenR1toR3{
+        top: 162px;
+        left: 177px;
+      }
+      #greenR1toR4{
+        top: 127px;
+        left: 177px;
+      }
+
+    /*// R2 -> R1, R3, R4 Prepare*/
+      #greenR2toR1{
+        top: 422px;
+        left: 123px;
+      }
+      #greenR2toR3{
+        top: 475px;
+        left: 182px;
+      }
+      #greenR2toR4{
+        top: 424px;
+        left: 175px;
+      }
+
+    /*// R3 -> R1, R2, R4 Prepare*/
+      #greenR3toR1{
+        top: 425px;
+        left: 607px;
+      }
+      #greenR3toR2{
+        top: 475px;
+        left: 615px;
+      }
+      #greenR3toR4{
+        top: 418px;
+        left: 682px;
+      }
+
+    /*// R4 -> R1, R2, R3 Prepare*/
+      #greenR4toR1{
+        top: 127px;
+        left: 615px;
+      }
+      #greenR4toR2{
+        top: 170px;
+        left: 612px;
+      }
+      #greenR4toR3{
+        top: 195px;
+        left: 682px;
+      }
+    
+    /*Nodes*/
+      .img1{
+        position: absolute;
+        top: 16%;
+        left: 12.5%;
+      }
+      .img2{
+        position: absolute;
+        /*top: 68%;
+        left: 8.5%;*/
+        top: 60%;
+        left: 12.5%;
+      }
+      .img3{
+        position: absolute;
+        /*top: 67%;
+        left: 48%;*/
+        top: 60%;
+        right: 22px;
+      }
+      .img4{
+        position: absolute;
+        top: 16%;
+        right: 22px;
+      }
+    /*Nodes ends*/
+
+    /*Other*/
+      button, #clickMe{
+        z-index: 5;
+        position: relative;
+      }
+      .hide{
+        display: none;
+      }
+      .motion-path-demo.a2a, .motion-path-demo.a3a, .motion-path-demo.a4a, .motion-path-demo.a5a, .motion-path-demo.a6a{
+        position: absolute;
+        background: transparent;
+        left: 7px;
+      }
+      section{
+        position: absolute;
+        top: -60px;
+        left: -40px;
+      }
+    /*Other ends*/
+  </style>
+</head>
+<body>
+  <section>
+    <!-- replicas -->
+      <img class="img1" src="../honest_last.png" width="80" width="80">
+      <img class="img2" src="../honest_last.png" width="80" width="80">
+      <img class="img3" src="../honest_last.png" width="80" width="80">
+      <img class="img4" src="../honest_last.png" width="80" width="80">
+    <!-- replicas ends -->
+
+    <!-- <article> -->
+      <!-- links -->
+        <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 139 200 L 139 437"/>
+          <text x="95" y="90" fill="green">Primary node <tspan x="95" y="110">(Replica 1)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 688 200 L 689 437"/>
+          <text x="85" y="540" fill="green">Backup node <tspan x="85" y="560">(Replica 2)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a2a" width="750" height="750" viewBox="0 0 750 750" style="left: 0;">
+          <path fill="none" stroke="#000" d="M 198 489 L 638 489"/>
+          <text x="655" y="540" fill="green">Backup node <tspan x="655" y="560">(Replica 3)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a4a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 189 143 L 626 142"/>
+          <text x="636" y="90" fill="green">Backup node <tspan x="636" y="110">(Replica 4)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a5a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 187 179 L 618 441"/>
+        </svg>
+        <svg class="motion-path-demo a6a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 618 187 L 179 441"/>
+        </svg>
+      <!-- links ends -->
+
+      <!-- messages -->
+        <!-- // R1 -> R2, R3, R4 Propose -->
+          <div id="greenR1toR2" class="common_green"></div>
+          <div id="greenR1toR3" class="common_green"></div>
+          <div id="greenR1toR4" class="common_green"></div>
+
+        <!-- // R2 -> R1, R3, R4 Prepare -->
+          <div id="greenR2toR1" class="hide common_green"></div>
+          <div id="greenR2toR3" class="hide common_green"></div>
+          <div id="greenR2toR4" class="hide common_green"></div>
+
+        <!-- // R3 -> R1, R2, R4 Prepare -->
+          <div id="greenR3toR1" class="hide common_green"></div>
+          <div id="greenR3toR2" class="hide common_green"></div>
+          <div id="greenR3toR4" class="hide common_green"></div>
+
+        <!-- // R4 -> R1, R2, R3 Prepare -->
+          <div id="greenR4toR1" class="hide common_green"></div>
+          <div id="greenR4toR2" class="hide common_green"></div>
+          <div id="greenR4toR3" class="hide common_green"></div>
+
+      <!-- messages ends -->
+    <!-- </article> -->
+  </section>
+  <!-- <div id="controls">
+    <button class="play">Play</button>
+    <button class="pause">Pause</button>
+  </div> -->
+</body>
+
+<!-- <script src="./animate.js"></script> -->
+<!-- <script src="./animate.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+<script type="text/javascript">
+  const line_r1_r2_timeout = 2000;
+  const line_r1_r3_timeout = 2000;
+  const line_r1_r4_timeout = 2000;
+
+  const line_r2_r3_timeout = 3000;
+  const line_r2_r4_timeout = 3000;
+  const line_r3_r4_timeout = 3000;
+
+  var processed = { // for logs
+    propose: [],
+    prepare: [], 
+    commit: []
+  };
+
+  propose();
+  // R1 -> R2, R3, R4 Propose
+  function propose() {
+    // R1 to R2
+      let nextToCallAfterR1R2Propose = ['sendR2R1Prepare', 'sendR2R3Prepare', 'sendR2R4Prepare'];
+      executeAnimate('propose', 'r1_r2', line_r1_r2_timeout, '#greenR1toR2', 0, 224, nextToCallAfterR1R2Propose);
+
+    // R1 to R3
+      let nextToCallAfterR1R3Propose = ['sendR3R1Prepare', 'sendR3R2Prepare', 'sendR3R4Prepare'];
+      executeAnimate('propose', 'r1_r3', line_r1_r3_timeout, '#greenR1toR3', 430, 261, nextToCallAfterR1R3Propose);
+
+    // R1 to R4
+      let nextToCallAfterR1R4Propose = ['sendR4R1Prepare', 'sendR4R2Prepare', 'sendR4R3Prepare'];
+      executeAnimate('propose', 'r1_r4', line_r1_r4_timeout, '#greenR1toR4', 437, -1, nextToCallAfterR1R4Propose);
+  }
+
+  // Prepare
+    // R2 -> R1, R3, R4 Prepare
+      function sendR2R1Prepare(){
+        $('#greenR1toR2').addClass('hide');
+        $('#greenR2toR1').css('background-image', 'url("../correct.png")');
+        $('#greenR2toR1').removeClass('hide');
+
+        let nextToCall = []; //'sendR2R1Commit', 'sendR1R2Commit'
+        executeAnimate('prepare', 'r2_r1', line_r1_r2_timeout, '#greenR2toR1', 1, -230, nextToCall);
+      }
+      function sendR2R3Prepare(){
+        $('#greenR2toR3').removeClass('hide');
+        $('#greenR2toR3').css('background-image', 'url("../correct.png")');
+        let nextToCall = []; //'sendR3R2Commit'
+        executeAnimate('prepare', 'r2_r3', line_r2_r3_timeout, '#greenR2toR3', 430, 0, nextToCall);
+      }
+      function sendR2R4Prepare(){
+        $('#greenR2toR4').removeClass('hide');
+        $('#greenR2toR4').css('background-image', 'url("../correct.png")');
+        let nextToCall = []; //'sendR3R2Commit'
+        executeAnimate('prepare', 'r2_r4', line_r2_r4_timeout, '#greenR2toR4', 435, -253, nextToCall);
+      }
+
+    // R3 -> R1, R2, R4 Prepare
+      function sendR3R1Prepare(){
+        $('#greenR1toR3').addClass('hide');
+        $('#greenR3toR1').css('background-image', 'url("../correct.png")');
+        $('#greenR3toR1').removeClass('hide');
+
+        let nextToCall = []; //'sendR3R1Commit', 'sendR1R3Commit'
+        executeAnimate('prepare', 'r3_r1', line_r1_r3_timeout, '#greenR3toR1', -424, -262, nextToCall);
+      }
+      function sendR3R2Prepare(){
+        $('#greenR3toR2').removeClass('hide');
+        $('#greenR3toR2').css('background-image', 'url("../correct.png")');
+        let nextToCall = []; //'sendR3R2Commit'
+        executeAnimate('prepare', 'r3_r2', line_r2_r3_timeout, '#greenR3toR2', -430, 0, nextToCall);
+      }
+      function sendR3R4Prepare(){
+        $('#greenR3toR4').removeClass('hide');
+        $('#greenR3toR4').css('background-image', 'url("../correct.png")');
+        let nextToCall = []; //'sendR3R4Commit'
+        executeAnimate('prepare', 'r3_r4', line_r3_r4_timeout, '#greenR3toR4', -3, -225, nextToCall);
+      }
+
+    // R4 -> R1, R2, R3 Prepare
+      function sendR4R1Prepare(){
+        $('#greenR1toR4').addClass('hide');
+        $('#greenR4toR1').css('background-image', 'url("../correct.png")');
+        $('#greenR4toR1').removeClass('hide');
+
+        let nextToCall = []; //'sendR4R1Commit', 'sendR1R4Commit'
+        executeAnimate('prepare', 'r4_r1', line_r1_r4_timeout, '#greenR4toR1', -424, -1, nextToCall);
+      }
+      function sendR4R2Prepare(){
+        $('#greenR4toR2').removeClass('hide');
+        $('#greenR4toR2').css('background-image', 'url("../correct.png")');
+        let nextToCall = []; //'sendR4R2Commit'
+        executeAnimate('prepare', 'r4_r2', line_r2_r4_timeout, '#greenR4toR2', -440, 255, nextToCall);
+      }
+      function sendR4R3Prepare(){
+        $('#greenR4toR3').removeClass('hide');
+        $('#greenR4toR3').css('background-image', 'url("../correct.png")');
+        let nextToCall = []; //'sendR4R3Commit'
+        executeAnimate('prepare', 'r4_r3', line_r3_r4_timeout, '#greenR4toR3', -3, 215, nextToCall);
+      }
+
+  // Commit
+    function sendR1R3Commit() {
+      // R1 to R3
+      $('#greenR1toR3').css('transform', "");
+      $('#greenR1toR3').removeClass('hide');
+      $('#greenR1toR3').css('background-image', 'url("../correctAngel.png")');
+      executeAnimate('commit', 'r1_r3', line_r3_r1_timeout, '#greenR1toR3', -180, 244, '');
+    }
+    
+    // function sendR3R1Commit(){
+    //   // R3 to R1
+    //   $('#greenR3toR1').css('transform', "");
+    //   $('#greenR3toR1').css('background-image', 'url("../correctAngel.png")');
+    //   // $('#greenR3toR1').removeClass('hide');
+    //   executeAnimate('commit', 'r3_r1', line_r3_r1_timeout, '#greenR3toR1', 180, -250, '');
+    // }
+
+    // function sendR1R2Commit() {
+    //   // R1 to R2
+    //   $('#greenR1toR2').css('transform', "");
+    //   $('#greenR1toR2').removeClass('hide');
+    //   $('#greenR1toR2').css('background-image', 'url("../correctAngel.png")');
+    //   executeAnimate('commit', 'r1_r2', line_r1_r2_timeout, '#greenR1toR2', 190, 224, '');
+    // }
+    // function sendR2R1Commit(){
+    //   // R2 to R1
+    //   $('#greenR2toR1').css('transform', "");
+    //   $('#greenR2toR1').css('background-image', 'url("../correctAngel.png")');
+    //   executeAnimate('commit', 'r2_r1', line_r1_r2_timeout, '#greenR2toR1', -230, -245, '');
+    // }
+
+    // function sendR2R3Commit(){
+    //   // R3 to R2
+    //   $('#greenR3toR2').css('top', "475px");
+    //   $('#greenR3toR2').css('left', "625px");
+
+    //   $('#greenR3toR2').css('transform', "");
+    //   $('#greenR3toR2').css('background-image', 'url("../correctAngel.png")');
+    //   executeAnimate('commit', 'r2_r3', line_r2_r3_timeout, '#greenR3toR2', -455, 0, '');
+    // }
+    // function sendR3R2Commit(){
+    //   // R3 to R2
+    //   $('#greenR2toR3').css('top', "475px");
+    //   $('#greenR2toR3').css('left', "170px");
+    //   $('#greenR2toR3').css('transform', "");
+    //   $('#greenR2toR3').css('background-image', 'url("../correctAngel.png")');
+
+    //   executeAnimate('commit', 'r3_r2', line_r2_r3_timeout, '#greenR2toR3', 455, 0, '');
+    // }
+
+  // Central
+    function executeAnimate(message_type, link, timeout, targets, translateX, translateY, nextToCall) {
+      anime.timeline({
+        easing: 'linear',
+        duration: timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          // r2_r3_commit_processed = true;
+          // processed.push({'message_type': message_type, 'link': link, 'done': true});
+          let x = { 'link': link, 'done': true };
+          processed[message_type].push(x);
+          console.log(processed);
+
+          $.each( nextToCall, function( key, value ) {
+            window[value]();
+          });
+        }
+      }).add({
+        targets: targets,
+        translateX: translateX,
+        translateY: translateY,
+      });
+    }
+
+  // $('.play').on('click', function() {
+  //   console.log('Playing');
+  //   t1.play();
+  // });
+  // $('.pause').on('click', function() {
+  //   console.log('Paused');
+  //   t1.pause();
+  // });
+</script>
+</html>

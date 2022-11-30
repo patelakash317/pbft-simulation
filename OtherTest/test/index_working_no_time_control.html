@@ -1,0 +1,95 @@
+<html><head>
+  <style> body { margin: 0; } </style>
+
+  <script src="https://unpkg.com/force-graph"></script><style type="text/css">.force-graph-container canvas {
+  display: block;
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.force-graph-container .graph-tooltip {
+  position: absolute;
+  top: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 3px;
+  color: #eee;
+  background: rgba(0,0,0,0.65);
+  visibility: hidden; /* by default */
+}
+
+.force-graph-container .clickable {
+  cursor: pointer;
+}
+
+.force-graph-container .grabbable {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.force-graph-container .grabbable:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+</style>
+  <!--<script src="../../dist/force-graph.js"></script>-->
+</head>
+
+<body>
+  <div id="graph"><div class="force-graph-container" style="position: relative;"><canvas width="1366" height="426" style="width: 1366px; height: 426px;"></canvas><div class="graph-tooltip" style="top: 425px; left: 137px; transform: translate(-10.0293%, calc(-100% - 8px));"></div></div></div>
+  <button id="emit-particles-btn">Send</button>
+  <style type="text/css">
+    #emit-particles-btn{
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+  <script>
+    fetch('miserables.json').then(res => res.json()).then(data => {
+      const links = data.links;
+      const Graph = ForceGraph()
+      (document.getElementById('graph'))
+        .graphData(data)
+        .nodeLabel('id')
+        .nodeAutoColorBy('group')
+        .linkDirectionalArrowLength(6)
+        .linkDirectionalArrowRelPos(1)
+
+        // .linkDirectionalParticles("value")
+        // .linkDirectionalParticleSpeed(d => d.value * 0.01)
+
+        .onNodeClick(node => {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(8, 2000);
+        })
+
+        .linkDirectionalParticleColor(() => 'red')
+
+        .linkHoverPrecision(10);
+
+        Graph.onLinkClick(Graph.emitParticle); // emit particles on link click
+        let x = 0;
+        document.getElementById('emit-particles-btn').addEventListener('click', () => {
+          x = 0;
+          [...Array(3).keys()].forEach((t) => {
+            const link = links[t];
+            if(x === 2){
+              Graph.emitParticle(link)
+                .linkDirectionalParticleSpeed(d => 0.008);
+            } else {
+              Graph.emitParticle(link)
+                .linkDirectionalParticleSpeed(d => 0.001);
+            }
+            x++;
+          });
+        });
+    });
+  </script>
+</body></html>

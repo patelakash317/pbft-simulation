@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style type="text/css">
+    html{
+      /*background: #000;*/
+    }
+    #greenR1toR3, #greenR1toR2, #greenR3toR2, #greenR2toR3, #greenR3toR1, #greenR2toR1 {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      /*background: #000;*/
+      background-image: url('./correct.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      z-index: 5;
+    }
+    #greenR1toR3{
+      top: 162px;
+      left: 344px;
+    }
+    #greenR1toR2{
+      top: 162px;
+      left: 410px;
+    }
+    #greenR3toR2{
+      top: 475px;
+      left: 170px;
+    }
+    #greenR2toR3{
+      top: 475px;
+      left: 625px;
+    }
+    
+    #greenR3toR1{
+      background-image: url('./correctAngel.png');
+      top: 405px;
+      left: 165px;
+    }
+    #greenR2toR1{
+      background-image: url('./correctAngel.png');
+      top: 405px;
+      left: 625px;
+    }
+
+    .hide{
+      display: none;
+    }
+    .motion-path-demo.a2a, .motion-path-demo.a3a{
+      position: absolute;
+      background: transparent;
+      left: 7px;
+    }
+    section{
+      position: absolute;
+      top: -60px;
+      left: -40px;
+    }
+    .img1{
+      position: absolute;
+      /*left: 26%;
+      top: 20%;*/
+      left: 46%;
+      top: 16%;
+    }
+    .img2{
+      position: absolute;
+      /*top: 68%;
+      left: 8.5%;*/
+      top: 60%;
+      left: 12.5%;
+    }
+    .img3{
+      position: absolute;
+      /*top: 67%;
+      left: 48%;*/
+      top: 57%;
+      right: 22px;
+    }
+    button, #clickMe{
+      z-index: 5;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <img class="img1" src="./honest_last.png" width="80" width="80">
+    <img class="img2" src="./malice_last.png" width="80" width="80">
+    <img class="img3" src="./malice_last.png" width="80" width="80">
+    <!-- <article> -->
+      <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
+        <path fill="none" stroke="#000" d="M 354 186 L 169 439"/>
+        <text x="354" y="215" fill="green">Primary node <tspan x="354" y="235">(Replica 1)</tspan></text>
+      </svg>
+      <!-- <div class="greenR2toR3"></div> -->
+      <svg class="motion-path-demo a2a" width="750" height="750" viewBox="0 0 750 750" style="left: 0;">
+        <path fill="none" stroke="#000" d="M 198 489 L 635 486"/>
+        <text x="655" y="520" fill="red">Backup node <tspan x="655" y="540">(Replica 2)</tspan></text>
+      </svg>
+      <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
+        <path fill="none" stroke="#000" d="M 420 185 L 635 428"/>
+        <text x="85" y="540" fill="red">Backup node <tspan x="85" y="560">(Replica 3)</tspan></text>
+      </svg>
+      <div id="greenR1toR3"></div>
+      <div id="greenR1toR2"></div>
+      <div id="greenR3toR2" class="hide"></div>
+      <div id="greenR2toR3" class="hide"></div>
+      <div id="greenR3toR1" class="hide"></div>
+      <div id="greenR2toR1" class="hide"></div>
+    <!-- </article> -->
+  </section>
+  <div id="controls">
+    <button class="play">Play</button>
+    <button class="pause">Pause</button>
+  </div>
+</body>
+
+<!-- <script src="./animate.js"></script> -->
+<!-- <script src="./animate.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+<script type="text/javascript">
+  const line_r1_r2_timeout = 2000;
+  const line_r2_r3_timeout = 3000;
+  const line_r3_r1_timeout = 3000;
+  // var message_r1_r3, message_r1_r2, message_r3_r2, message_r2_r3, message_r3_r1, message_r2_r1; // messages
+
+  let r1_r3_propose_processed = false;
+  let r1_r3_commit_processed = false;
+
+  let r3_r1_prepare_processed = false;
+  let r3_r1_commit_processed = false;
+
+
+  let r1_r2_propose_processed = false;
+  let r1_r2_commit_processed = false;
+
+  let r2_r1_prepare_processed = false;
+  let r2_r1_commit_processed = false;
+
+  let r2_r3_prepare_processed = false;
+  let r2_r3_commit_processed = false;
+
+  let r3_r2_prepare_processed = false;
+  let r3_r2_commit_processed = false;
+
+  propose();
+  function propose() {
+    // R1 to R3
+    anime.timeline({
+      easing: 'linear',
+      duration: line_r3_r1_timeout,
+      begin: function(anim) {
+        // console.log("began : " + anim.began);
+      },
+      complete: function(anim) {
+        // Prepare
+        if(r1_r3_propose_processed === false){ // if R1 Proposal reached to R3, start R3 prepare to R2
+          sendR3R2Prepare();
+          sendR3R1Prepare();
+        }
+        r1_r3_propose_processed = true;
+      }
+    }).add({
+      targets: '#greenR1toR3',
+      translateX: -180,
+      translateY: 244
+      
+      // offset: '-=300', // <--- added offset.
+      // translateX: [5, -184],
+      // translateY: [5, 244],
+    });
+
+    // R1 to R2
+    message_r1_r2 = anime.timeline({
+      easing: 'linear',
+      duration: line_r1_r2_timeout,
+      begin: function(anim) {
+        // console.log("began : " + anim.began);
+      },
+      complete: function(anim) {
+        // Prepare
+        if(r1_r2_propose_processed === false){ // if R1 Proposal reached to R2, start R2 prepare to R1
+          sendR2R1Prepare();
+          sendR2R3Prepare();
+        }
+        r1_r2_propose_processed = true;
+      }
+    }).add({
+      targets: '#greenR1toR2',
+      translateX: 190,
+      translateY: 224
+    });
+  }
+
+  // Prepare
+    function sendR3R1Prepare(){
+      $('#greenR1toR3').addClass('hide');
+      $('#greenR3toR1').css('background-image', 'url("./misleading.png")');
+      $('#greenR3toR1').removeClass('hide');
+
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r3_r1_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r3_r1_prepare_processed = true;
+          sendR3R1Commit();
+          sendR1R3Commit();
+        }
+      }).add({
+        targets: '#greenR3toR1',
+        translateX: 180,
+        translateY: -250
+      });
+    }
+    function sendR3R2Prepare() {
+      $('#greenR3toR2').css('background-image', 'url("./misleading.png")');
+      $('#greenR3toR2').removeClass('hide');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r2_r3_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r3_r2_prepare_processed = true;
+          sendR2R3Commit(); // reverse because potential timing issue
+        }
+      }).add({
+        targets: '#greenR3toR2',
+        translateX: 455
+      });
+    }
+
+    function sendR2R1Prepare(){
+      $('#greenR1toR2').addClass('hide');
+      $('#greenR2toR1').css('background-image', 'url("./misleading.png")');
+      $('#greenR2toR1').removeClass('hide');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r1_r2_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r2_r1_prepare_processed = true;
+          sendR2R1Commit();
+          sendR1R2Commit();
+        }
+      }).add({
+        targets: '#greenR2toR1',
+        translateX: -230,
+        translateY: -245
+      });
+    }
+    function sendR2R3Prepare(){
+      $('#greenR2toR3').css('background-image', 'url("./misleading.png")');
+      $('#greenR2toR3').removeClass('hide');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r2_r3_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r2_r3_prepare_processed = true;
+          sendR3R2Commit(); // reverse because potential timing issue
+        }
+      }).add({
+        targets: '#greenR2toR3',
+        translateX: -455
+      });
+    }
+    
+  // Commit
+    function sendR1R3Commit() {
+      // R1 to R3
+      $('#greenR1toR3').css('transform', "");
+      $('#greenR1toR3').removeClass('hide');
+      $('#greenR1toR3').css('background-image', 'url("./correctEvil.png")');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r3_r1_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r1_r3_commit_processed = true;
+        }
+      }).add({
+        targets: '#greenR1toR3',
+        translateX: -180,
+        translateY: 244
+        
+        // offset: '-=300', // <--- added offset.
+        // translateX: [5, -184],
+        // translateY: [5, 244],
+      });
+    }
+    function sendR3R1Commit(){
+      // R3 to R1
+      $('#greenR3toR1').css('transform', "");
+      $('#greenR3toR1').css('background-image', 'url("./misleadingAngel.png")');
+      // $('#greenR3toR1').removeClass('hide');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r3_r1_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r3_r1_commit_processed = true;
+        }
+      }).add({
+        targets: '#greenR3toR1',
+        translateX: 180,
+        translateY: -250
+      });
+    }
+
+    function sendR1R2Commit() {
+      // R1 to R2
+      $('#greenR1toR2').css('transform', "");
+      $('#greenR1toR2').removeClass('hide');
+      $('#greenR1toR2').css('background-image', 'url("./correctEvil.png")');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r1_r2_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r1_r2_commit_processed = true;
+        }
+      }).add({
+        targets: '#greenR1toR2',
+        translateX: 190,
+        translateY: 224
+      });
+    }
+    function sendR2R1Commit(){
+      // R2 to R1
+      $('#greenR2toR1').css('transform', "");
+      $('#greenR2toR1').css('background-image', 'url("./misleadingAngel.png")');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r1_r2_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r2_r1_commit_processed = true;
+        }
+      }).add({
+        targets: '#greenR2toR1',
+        translateX: -230,
+        translateY: -245
+      });
+    }
+
+    function sendR2R3Commit(){
+      // R3 to R2
+      $('#greenR3toR2').css('top', "475px");
+      $('#greenR3toR2').css('left', "625px");
+
+      $('#greenR3toR2').css('transform', "");
+      $('#greenR3toR2').css('background-image', 'url("./misleadingAngel.png")');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r2_r3_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r3_r2_commit_processed = true;
+        }
+      }).add({
+        targets: '#greenR3toR2',
+        translateX: -455,
+      });
+    }
+    function sendR3R2Commit(){
+      // R3 to R2
+      $('#greenR2toR3').css('top', "475px");
+      $('#greenR2toR3').css('left', "170px");
+      $('#greenR2toR3').css('transform', "");
+      $('#greenR2toR3').css('background-image', 'url("./misleadingAngel.png")');
+      anime.timeline({
+        easing: 'linear',
+        duration: line_r2_r3_timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+        },
+        complete: function(anim) {
+          r2_r3_commit_processed = true;
+        }
+      }).add({
+        targets: '#greenR2toR3',
+        translateX: 455,
+      });
+    }
+
+  $('.play').on('click', function() {
+    console.log('Playing');
+    // t1.play();
+  });
+  $('.pause').on('click', function() {
+    console.log('Paused');
+    // t1.pause();
+  });
+</script>
+</html>

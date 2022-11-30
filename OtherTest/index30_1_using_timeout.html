@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style type="text/css">
+    html{
+      /*background: #000;*/
+    }
+    #green, #green2, #green3, #green4, #green5, #green6 {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      /*background: #000;*/
+      background-image: url('./correct.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      z-index: 5;
+    }
+    #green{
+      top: 162px;
+      left: 344px;
+    }
+    #green2{
+      top: 162px;
+      left: 410px;
+    }
+    #green3{
+      top: 475px;
+      left: 170px;
+    }
+    #green4{
+      top: 475px;
+      left: 625px;
+    }
+    
+    #green5{
+      background-image: url('./correctAngel.png');
+      top: 405px;
+      left: 165px;
+    }
+    #green6{
+      background-image: url('./correctAngel.png');
+      top: 405px;
+      left: 625px;
+    }
+
+    .hide{
+      display: none;
+    }
+    .motion-path-demo.a2a, .motion-path-demo.a3a{
+      position: absolute;
+      background: transparent;
+      left: 7px;
+    }
+    section{
+      position: absolute;
+      top: -60px;
+      left: -40px;
+    }
+    .img1{
+      position: absolute;
+      /*left: 26%;
+      top: 20%;*/
+      left: 46%;
+      top: 16%;
+    }
+    .img2{
+      position: absolute;
+      /*top: 68%;
+      left: 8.5%;*/
+      top: 60%;
+      left: 12.5%;
+    }
+    .img3{
+      position: absolute;
+      /*top: 67%;
+      left: 48%;*/
+      top: 57%;
+      right: 22px;
+    }
+    button, #clickMe{
+      z-index: 5;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <img class="img1" src="./honest_last.png" width="80" width="80">
+    <img class="img2" src="./honest_last.png" width="80" width="80">
+    <img class="img3" src="./honest_last.png" width="80" width="80">
+    <!-- <article> -->
+      <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
+        <path fill="none" stroke="#000" d="M 354 186 L 169 439"/>
+        <text x="354" y="215" fill="green">Primary node <tspan x="354" y="235">(Replica 1)</tspan></text>
+      </svg>
+      <!-- <div class="green4"></div> -->
+      <svg class="motion-path-demo a2a" width="750" height="750" viewBox="0 0 750 750" style="left: 0;">
+        <path fill="none" stroke="#000" d="M 198 489 L 635 486"/>
+        <text x="655" y="520" fill="green">Backup node <tspan x="655" y="540">(Replica 2)</tspan></text>
+      </svg>
+      <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
+        <path fill="none" stroke="#000" d="M 420 185 L 635 428"/>
+        <text x="85" y="540" fill="green">Backup node <tspan x="85" y="560">(Replica 3)</tspan></text>
+      </svg>
+      <div id="green"></div>
+      <div id="green2"></div>
+      <div id="green3" class="hide"></div>
+      <div id="green4" class="hide"></div>
+      <div id="green5" class="hide"></div>
+      <div id="green6" class="hide"></div>
+    <!-- </article> -->
+  </section>
+  <!-- <div id="controls">
+    <button class="play">Play</button>
+    <button class="pause">Pause</button>
+  </div> -->
+</body>
+
+<!-- <script src="./animate.js"></script> -->
+<!-- <script src="./animate.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+<script type="text/javascript">
+  let line_r1_r2_timeout = 2000;
+  let line_r2_r3_timeout = 3000;
+  let line_r3_r1_timeout = 3000;
+  var t1, t2, t3, t4, t5, t6; // messages
+  // pre prepare
+    function sendt1() {
+      t1 = anime.timeline({
+        easing: 'linear',
+        duration: 3000
+      }).add({
+        targets: '#green',
+        translateX: -180,
+        translateY: 244
+        
+        // offset: '-=300', // <--- added offset.
+        // translateX: [5, -184],
+        // translateY: [5, 244],
+      });
+    }
+    sendt1();
+    setTimeout(function() {
+      // prepare
+        t1.reverse();
+        t1.play();
+
+        $('#green3').removeClass('hide');
+
+        t3 = anime.timeline({
+          easing: 'linear',
+          duration: 3000
+        });
+        t3.add({
+          targets: '#green3',
+          translateX: 455
+        });
+        setTimeout(function() {
+          // commit
+            $('#green').css('background-image', 'url("./correctAngel.png")');
+            $('#green3').css('background-image', 'url("./correctAngel.png")');
+
+            t3.reverse();
+            t3.play();
+
+            $('#green5').removeClass('hide');
+            t5 = anime.timeline({
+              easing: 'linear',
+              duration: 3000
+            }).add({
+              targets: '#green5',
+              translateX: 180,
+              translateY: -250
+            });
+            sendt1();
+        }, 3000);
+    }, 3000);
+
+    function sendt2() {
+      t2 = anime.timeline({
+        easing: 'linear',
+        duration: 2000
+      });
+      t2.add({
+        targets: '#green2',
+        translateX: 190,
+        translateY: 224
+      });
+    }
+    sendt2();
+    setTimeout(function() {
+      // prepare
+        t2.reverse();
+        t2.play();
+
+        $('#green4').removeClass('hide');
+        t4 = anime.timeline({
+          easing: 'linear',
+          duration: 3000
+        });
+        t4.add({
+          targets: '#green4',
+          translateX: -455
+        });
+        setTimeout(function() {
+          // t2 commit
+          $('#green2').css('background-image', 'url("./correctAngel.png")');
+
+          $('#green6').removeClass('hide');
+
+          t6 = anime.timeline({
+            easing: 'linear',
+            duration: 2000
+          }).add({
+            targets: '#green6',
+            translateX: -230,
+            translateY: -245
+          });
+          sendt2();
+        }, 2000);
+        setTimeout(function() {
+          // t4 commit
+            $('#green4').css('background-image', 'url("./correctAngel.png")');
+            t4.reverse();
+            t4.play();
+        }, 3000);
+    }, 2000);
+  
+  // $('.play').on('click', function() {
+  //   console.log('Playing');
+  //   t1.play();
+  // });
+  // $('.pause').on('click', function() {
+  //   console.log('Paused');
+  //   t1.pause();
+  // });
+</script>
+</html>
+
+
