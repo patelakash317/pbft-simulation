@@ -30,9 +30,13 @@ button, #clickMe{
   height: 30px;
   /*background: #000;*/
   background-image: url('../img/correct.png');
+  /*background-image: url('../img/transparent/correct.png');*/
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 5;
+
+  /*background-color: #ff70f0;
+  border-radius: 50px;*/
 }
 
 /*slider*/

@@ -294,6 +294,7 @@
     // R2 -> R1, R3, R4, R5 Prepare
       function sendR2R1Prepare(){
         $('#lblcurrentstage').html('Prepare Phase');
+        $('#lblcurrentstage').css('background', 'blue');
         $('#greenR1toR2').addClass('hide');
         $('#greenR2toR1').css('background-image', 'url("./resources/img/correct.png")');
         $('#greenR2toR1').removeClass('hide');
@@ -420,6 +421,7 @@
     // R1 -> R2, R3, R4, R5 Commit
       function sendR1R2Commit() {
         $('#lblcurrentstage').html('Commit Phase');
+        $('#lblcurrentstage').css('background', 'rgb(128, 0, 35, 0.68)');
         // R1 to R2
         // $('#greenR1toR2').css('transform', "");
         $('#greenR1toR2_commit').removeClass('hide');

@@ -114,13 +114,13 @@
       <div id="greenR3toR1" class="hide"></div>
       <div id="greenR2toR1" class="hide"></div> -->
       <div class="blkspeed">
-        <label class="lblR1R2">N/W Speed (R1-R2):<br/>2s</label><br/>
+        <label class="lblR1R2">Delay (R1-R2):<br/>2s</label><br/>
         <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
         <br/>
-        <label class="lblR2R3">N/W Speed (R2-R3):<br/>3s</label><br/>
+        <label class="lblR2R3">Delay (R2-R3):<br/>3s</label><br/>
         <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR2R3">
         <br/>
-        <label class="lblR3R1">N/W Speed (R3-R1):<br/>3s</label><br/>
+        <label class="lblR3R1">Delay (R3-R1):<br/>3s</label><br/>
         <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR3R1">
       </div>
     <!-- </article> -->
@@ -176,6 +176,7 @@
     // R2 -> R1, R3 Prepare
       function sendR2R1Prepare(){
         $('#lblcurrentstage').html('Prepare Phase');
+        $('#lblcurrentstage').css('background', 'blue');
         $('#greenR1toR2').addClass('hide');
         $('#greenR2toR1').css('background-image', 'url("./resources/img/correct.png")');
         $('#greenR2toR1').removeClass('hide');
@@ -210,6 +211,7 @@
     // R1 -> R2, R3 Commit
       function sendR1R2Commit() {
         $('#lblcurrentstage').html('Commit Phase');
+        $('#lblcurrentstage').css('background', 'rgb(128, 0, 35, 0.68)');
         // R1 to R2
         $('#greenR1toR2_commit').removeClass('hide');
         $('#greenR1toR2_commit').css('background-image', 'url("./resources/img/correctAngel.png")');

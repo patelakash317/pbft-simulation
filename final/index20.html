@@ -50,7 +50,7 @@
       <div id="greenR2toR1_commit" class="hide common_green"></div>
     <!-- </article> -->
       <div class="blkspeed">
-        <label>Speed (R1-R2): 2.5s</label>
+        <label>Delay (R1-R2): 2.5s</label>
         <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
       </div>
        <!-- class="slider" -->
@@ -88,8 +88,12 @@
   // Prepare
     function sendR2R1Prepare(){
       $('#lblcurrentstage').html('Prepare Phase');
+      $('#lblcurrentstage').css('background', 'blue');
       $('#greenR1toR2').addClass('hide');
       $('#greenR2toR1').css('background-image', 'url("./resources/img/correct.png")');
+      // $('#greenR2toR1').css('background-image', 'url("./resources/img/transparent/correct.png")');
+      // $('#greenR2toR1').css('background-color', 'blue');
+
       $('#greenR2toR1').removeClass('hide');
 
       let nextToCall = []; //['sendR2R1Commit', 'sendR1R2Commit'];
@@ -99,18 +103,25 @@
   // Commit
     function sendR2R1Commit() {
       $('#lblcurrentstage').html('Commit Phase');
+      $('#lblcurrentstage').css('background', 'rgb(128, 0, 35, 0.68)');
+
       // R2 to R1
       $('#greenR2toR1').addClass('hide');
       $('#greenR2toR1_commit').removeClass('hide');
       $('#greenR2toR1_commit').css('background-image', 'url("./resources/img/correctAngel.png")');
-        executeAnimate('commit', 'r2', 'r1', line_r1_r2_timeout, '#greenR2toR1_commit', -3, -216, '');
+      // $('#greenR2toR1_commit').css('background-image', 'url("./resources/img/transparent/correctAngel.png")');
+      // $('#greenR2toR1_commit').css('background-color', 'rgb(128, 0, 35, 0.68)');
+
+      executeAnimate('commit', 'r2', 'r1', line_r1_r2_timeout, '#greenR2toR1_commit', -3, -216, '');
     }
     function sendR1R2Commit() {
       // R1 to R2
       $('#greenR1toR2').addClass('hide');
       $('#greenR1toR2_commit').removeClass('hide');
       $('#greenR1toR2_commit').css('background-image', 'url("./resources/img/correctAngel.png")');
-        executeAnimate('commit', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2_commit', 2, 224, '');
+      // $('#greenR1toR2_commit').css('background-image', 'url("./resources/img/transparent/correctAngel.png")');
+      // $('#greenR1toR2_commit').css('background-color', 'rgb(128, 0, 35, 0.68)');
+      executeAnimate('commit', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2_commit', 2, 224, '');
     }
 
   // Central
@@ -166,6 +177,8 @@
           }
 
           if(targets == '#greenR1toR2_commit'){
+            // $('#greenR2toR1_commit').css('background-color', 'green');
+            // $('#greenR1toR2_commit').css('background-color', 'green');
             $('#lblcurrentstage').css('background', 'green');
             $('#lblcurrentstage').html('Approved!');
           }

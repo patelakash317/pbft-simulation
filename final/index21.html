@@ -50,7 +50,7 @@
       <div id="greenR2toR1_commit" class="hide common_green"></div>
     <!-- </article> -->
       <div class="blkspeed">
-        <label>Speed (R1-R2): 2.5s</label>
+        <label>Delay (R1-R2): 2.5s</label>
         <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
       </div>
        <!-- class="slider" -->
@@ -89,6 +89,7 @@
   // Prepare
     function sendR2R1Prepare(){
       $('#lblcurrentstage').html('Prepare Phase');
+      $('#lblcurrentstage').css('background', 'blue');
       $('#greenR1toR2').addClass('hide');
       $('#greenR2toR1').css('background-image', 'url("./resources/img/misleading.png")');
       $('#greenR2toR1').removeClass('hide');
@@ -100,6 +101,7 @@
   // Commit
     function sendR2R1Commit() {
       $('#lblcurrentstage').html('Commit Phase');
+      $('#lblcurrentstage').css('background', 'rgb(128, 0, 35, 0.68)');
       // R2 to R1
       $('#greenR2toR1').addClass('hide');
       $('#greenR2toR1_commit').removeClass('hide');
