@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link href="./resources/css/common.css" rel="stylesheet">
+  <style type="text/css">
+    #greenR1toR2, #greenR1toR2_commit{
+      top: 193px;
+      left: 373px;
+    }
+    #greenR2toR1, #greenR2toR1_commit{
+      top: 411px;
+      left: 375px;
+    }
+    .motion-path-demo.a2a, .motion-path-demo.a3a{
+      position: absolute;
+      background: transparent;
+      left: 7px;
+    }
+    .img1{
+      position: absolute;
+      /*left: 26%;
+      top: 20%;*/
+      left: 46%;
+      top: 16%;
+    }
+    .img2{
+      position: absolute;
+      /*top: 68%;
+      left: 8.5%;*/
+      top: 60%;
+      left: 46%;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <img class="img1" src="./resources/img/honest_last.png" width="80" width="80">
+    <img class="img2" src="./resources/img/malice_last.png" width="80" width="80">
+    <!-- <article> -->
+      <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
+        <path fill="none" stroke="#000" d="M 388 204 L 390 436"/>
+        <text x="304" y="210" fill="green">Primary node <tspan x="394" y="210">(Replica 1)</tspan></text>
+        <text x="304" y="540" fill="red">Backup node <tspan x="394" y="540">(Replica 2)</tspan></text>
+      </svg>
+      <div id="greenR1toR2" class="common_green"></div>
+      <div id="greenR2toR1" class="hide common_green"></div>
+      <div id="greenR1toR2_commit" class="hide common_green"></div>
+      <div id="greenR2toR1_commit" class="hide common_green"></div>
+    <!-- </article> -->
+      <div class="blkspeed">
+        <label>Speed (R1-R2): 2.5s</label>
+        <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
+      </div>
+       <!-- class="slider" -->
+      <div id="lblcurrentstage">PrePrepare Phase</div>
+  </section>
+  <!-- <div id="controls">
+    <button class="play">Play</button>
+    <button class="pause">Pause</button>
+  </div> -->
+</body>
+
+<script src="./resources/js/jquery.min.js"></script>
+<script src="./resources/js/anime.min.js"></script>
+
+<script type="text/javascript">
+  let line_r1_r2_timeout = 2500;
+  $('#myRange').on('change', function() {
+    line_r1_r2_timeout = $(this).val();
+    let me = line_r1_r2_timeout/1000;
+    $('.blkspeed label').html('Speed (R1-R2): '+me+'s');
+  });
+
+  var processed = { // for logs
+    propose: [],
+    prepare: [], 
+    commit: []
+  };
+
+  propose();
+  function propose() {
+    // R1 to R2
+    let nextToCallAfterR1R2Propose = ['sendR2R1Prepare'];
+    executeAnimate('propose', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2', 2, 224, nextToCallAfterR1R2Propose);
+  }
+
+  // Prepare
+    function sendR2R1Prepare(){
+      $('#lblcurrentstage').html('Prepare Phase');
+      $('#greenR1toR2').addClass('hide');
+      $('#greenR2toR1').css('background-image', 'url("./resources/img/misleading.png")');
+      $('#greenR2toR1').removeClass('hide');
+
+      let nextToCall = []; //['sendR2R1Commit', 'sendR1R2Commit'];
+      executeAnimate('prepare', 'r2', 'r1', line_r1_r2_timeout, '#greenR2toR1', -3, -216, nextToCall);
+    }
+    
+  // Commit
+    function sendR2R1Commit() {
+      $('#lblcurrentstage').html('Commit Phase');
+      // R2 to R1
+      $('#greenR2toR1').addClass('hide');
+      $('#greenR2toR1_commit').removeClass('hide');
+      $('#greenR2toR1_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r2', 'r1', line_r1_r2_timeout, '#greenR2toR1_commit', -3, -216, '');
+    }
+    function sendR1R2Commit() {
+      // R1 to R2
+      $('#greenR1toR2').addClass('hide');
+      $('#greenR1toR2_commit').removeClass('hide');
+      $('#greenR1toR2_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2_commit', 2, 224, '');
+    }
+
+  // Central
+    function executeAnimate(message_type, from, to, timeout, targets, translateX, translateY, nextToCall) {
+      anime.timeline({
+        easing: 'linear',
+        duration: timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+          // if(message_type == 'commit'){
+          //   let x1 = checkReceivedMajority(processed, message_type, to);
+          //   if(x1){
+          //     anim.play();
+          //   } else {
+          //     anim.pause();
+          //   }
+          // }
+        },
+        complete: function(anim) {
+          // r2_r3_commit_processed = true;
+          // processed.push({'message_type': message_type, 'link': link, 'done': true});
+
+          let x = { 'message_type': message_type, 'from': from, 'to': to, 'done': true };
+          processed[message_type].push(x);
+          console.log(processed);
+
+          if(message_type == 'prepare'){
+            $(targets).addClass('hide');
+
+            let x1 = checkReceivedMajority(processed, message_type, to);
+            
+            if(x1){
+              console.log(to+" got majority votes in "+from+"-"+to+" cycle");
+              let next_message_type = 'commit';
+              let already_commit = checkIfCommitDone(processed, next_message_type, from, to);
+              console.log('Log entry of commit from '+from+'-'+to+' is: '+already_commit);
+              if(!already_commit){
+                let nextToCall1 = [];
+                if(to == 'r1'){
+                  nextToCall1 = ['sendR1R2Commit', 'sendR2R1Commit'];
+                }
+                $.each( nextToCall1, function( key, value ) {
+                  window[value]();
+                });
+              }
+            } else {
+              console.log(to+" ---DID NOT --- GOT majority votes in "+from+"-"+to+" cycle");
+            }
+          } else {
+            $.each( nextToCall, function( key, value ) {
+              window[value]();
+            });
+          }
+
+          if(targets == '#greenR1toR2_commit'){
+            $('#lblcurrentstage').css('background', 'red');
+            $('#lblcurrentstage').html('Rejected!');
+          }
+        }
+      }).add({
+        targets: targets,
+        translateX: translateX,
+        translateY: translateY,
+      });
+    }
+    function checkReceivedMajority(processed, message_type, to) {
+      let match_count = 1; // self vote
+      $.each( processed[message_type], function( key, value ) {
+        if(value.to == to){
+          match_count++;
+        }
+      });
+      if(match_count >= 1){
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function checkIfCommitDone(processed, message_type, to, from) {
+      let nmatch_count = 0;
+      $.each( processed[message_type], function( key, value ) {
+      // $.each( message_data, function( key, value ) {
+        if( (value.from == from) ){
+          nmatch_count++;
+        }
+      });
+      if(nmatch_count >= 1){
+        // console.log('already message_type: '+message_type+' from: '+from);
+        return true;
+      } else {
+        // console.log('message_type: '+message_type+' from: '+from);
+        return false;
+      }
+    }
+
+</script>
+</html>

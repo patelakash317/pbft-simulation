@@ -3,60 +3,43 @@
 <head>
   <meta charset="utf-8">
   <title></title>
+  <link href="./resources/css/common.css" rel="stylesheet">
   <style type="text/css">
-    html{
-      /*background: #000;*/
-    }
-    #greenR1toR3, #greenR1toR2, #greenR3toR2, #greenR2toR3, #greenR3toR1, #greenR2toR1 {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      /*background: #000;*/
-      background-image: url('../correct.png');
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      z-index: 5;
-    }
-    #greenR1toR3{
-      top: 162px;
-      left: 344px;
-    }
-    #greenR1toR2{
-      top: 162px;
-      left: 410px;
-    }
-    #greenR3toR2{
-      top: 475px;
-      left: 170px;
-    }
-    #greenR2toR3{
-      top: 475px;
-      left: 625px;
-    }
-    
-    #greenR3toR1{
-      background-image: url('../correctAngel.png');
-      top: 405px;
-      left: 165px;
-    }
-    #greenR2toR1{
-      background-image: url('../correctAngel.png');
-      top: 405px;
-      left: 625px;
-    }
+    /*// R1 -> R2, R3 Propose*/
+      #greenR1toR3, #greenR1toR3_commit{
+        top: 162px;
+        left: 344px;
+      }
+      #greenR1toR2, #greenR1toR2_commit{
+        top: 162px;
+        left: 410px;
+      }
 
-    .hide{
-      display: none;
-    }
+    /*// R2 -> R1, R3 Prepare*/
+      #greenR2toR3, #greenR2toR3_commit{
+        top: 475px;
+        left: 625px;
+      }
+      #greenR2toR1, #greenR2toR1_commit{
+        top: 405px;
+        left: 625px;
+      }
+
+    /*// R3 -> R1, R2 Prepare*/
+      #greenR3toR2, #greenR3toR2_commit{
+        top: 475px;
+        left: 170px;
+      }
+      #greenR3toR1, #greenR3toR1_commit{
+        background-image: url('./resources/img/correctAngel.png');
+        top: 405px;
+        left: 165px;
+      }
+    
     .motion-path-demo.a2a, .motion-path-demo.a3a{
       position: absolute;
       background: transparent;
       left: 7px;
-    }
-    section{
-      position: absolute;
-      top: -60px;
-      left: -40px;
     }
     .img1{
       position: absolute;
@@ -79,38 +62,69 @@
       top: 60%;
       right: 22px;
     }
-    button, #clickMe{
-      z-index: 5;
-      position: relative;
-    }
   </style>
 </head>
 <body>
   <section>
-    <img class="img1" src="../honest_last.png" width="80" width="80">
-    <img class="img2" src="../malice_last.png" width="80" width="80">
-    <img class="img3" src="../honest_last.png" width="80" width="80">
+    <img class="img1" src="./resources/img/honest_last.png" width="80" width="80">
+    <img class="img2" src="./resources/img/malice_last.png" width="80" width="80">
+    <img class="img3" src="./resources/img/malice_last.png" width="80" width="80">
     <!-- <article> -->
-      <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
-        <path fill="none" stroke="#000" d="M 354 186 L 169 439"/>
-        <text x="354" y="215" fill="green">Primary node <tspan x="354" y="235">(Replica 1)</tspan></text>
-      </svg>
-      <!-- <div class="greenR2toR3"></div> -->
-      <svg class="motion-path-demo a2a" width="750" height="750" viewBox="0 0 750 750" style="left: 0;">
-        <path fill="none" stroke="#000" d="M 198 489 L 638 489"/>
-        <text x="655" y="540" fill="green">Backup node <tspan x="655" y="560">(Replica 2)</tspan></text>
-      </svg>
-      <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
-        <path fill="none" stroke="#000" d="M 420 185 L 635 428"/>
-        <text x="85" y="540" fill="red">Backup node <tspan x="85" y="560">(Replica 3)</tspan></text>
-      </svg>
-      <div id="greenR1toR3"></div>
+      <!-- links -->
+        <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 354 186 L 169 439"/>
+          <text x="354" y="215" fill="green">Primary node <tspan x="354" y="235">(Replica 1)</tspan></text>
+        </svg>
+        <!-- <div class="greenR2toR3"></div> -->
+        <svg class="motion-path-demo a2a" width="750" height="750" viewBox="0 0 750 750" style="left: 0;">
+          <path fill="none" stroke="#000" d="M 198 489 L 638 489"/>
+          <text x="655" y="540" fill="red">Backup node <tspan x="655" y="560">(Replica 2)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 420 185 L 635 428"/>
+          <text x="85" y="540" fill="red">Backup node <tspan x="85" y="560">(Replica 3)</tspan></text>
+        </svg>
+      <!-- links ends -->
+
+      <!-- messages -->
+        <!-- // R1 -> R2, R3 Propose -->
+          <div id="greenR1toR2" class="common_green"></div>
+          <div id="greenR1toR3" class="common_green"></div>
+          <div id="greenR1toR2_commit" class="hide common_green"></div>
+          <div id="greenR1toR3_commit" class="hide common_green"></div>
+
+        <!-- // R2 -> R1, R3 Prepare -->
+          <div id="greenR2toR1" class="hide common_green"></div>
+          <div id="greenR2toR3" class="hide common_green"></div>
+          <div id="greenR2toR1_commit" class="hide common_green"></div>
+          <div id="greenR2toR3_commit" class="hide common_green"></div>
+
+        <!-- // R3 -> R1, R2 Prepare -->
+          <div id="greenR3toR1" class="hide common_green"></div>
+          <div id="greenR3toR2" class="hide common_green"></div>
+          <div id="greenR3toR1_commit" class="hide common_green"></div>
+          <div id="greenR3toR2_commit" class="hide common_green"></div>
+
+      <!-- messages ends -->
+
+      <!-- <div id="greenR1toR3"></div>
       <div id="greenR1toR2"></div>
       <div id="greenR3toR2" class="hide"></div>
       <div id="greenR2toR3" class="hide"></div>
       <div id="greenR3toR1" class="hide"></div>
-      <div id="greenR2toR1" class="hide"></div>
+      <div id="greenR2toR1" class="hide"></div> -->
+      <div class="blkspeed">
+        <label class="lblR1R2">N/W Speed (R1-R2):<br/>2s</label><br/>
+        <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
+        <br/>
+        <label class="lblR2R3">N/W Speed (R2-R3):<br/>3s</label><br/>
+        <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR2R3">
+        <br/>
+        <label class="lblR3R1">N/W Speed (R3-R1):<br/>3s</label><br/>
+        <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR3R1">
+      </div>
     <!-- </article> -->
+      <div id="lblcurrentstage">PrePrepare Phase</div>
   </section>
   <!-- <div id="controls">
     <button class="play">Play</button>
@@ -118,15 +132,28 @@
   </div> -->
 </body>
 
-<!-- <script src="../animate.js"></script> -->
-<!-- <script src="../animate.min.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="./resources/js/jquery.min.js"></script>
+<script src="./resources/js/anime.min.js"></script>
 
 <script type="text/javascript">
-  const line_r1_r2_timeout = 2000;
-  const line_r2_r3_timeout = 3000;
-  const line_r3_r1_timeout = 3000;
+  let line_r1_r2_timeout = 2000;
+  let line_r2_r3_timeout = 3000;
+  let line_r3_r1_timeout = 3000;
+  $('#myRange').on('change', function() {
+    line_r1_r2_timeout = $(this).val();
+    let me = line_r1_r2_timeout/1000;
+    $('.blkspeed label.lblR1R2').html('N/W Speed (R1-R2):<br/>'+me+'s');
+  });
+  $('#myRangeR2R3').on('change', function() {
+    line_r2_r3_timeout = $(this).val();
+    let me2 = line_r2_r3_timeout/1000;
+    $('.blkspeed label.lblR2R3').html('N/W Speed (R2-R3):<br/>'+me2+'s');
+  });
+  $('#myRangeR3R1').on('change', function() {
+    line_r3_r1_timeout = $(this).val();
+    let me3 = line_r3_r1_timeout/1000;
+    $('.blkspeed label.lblR3R1').html('N/W Speed (R3-R1):<br/>'+me3+'s');
+  });
 
   var processed = { // for logs
     propose: [],
@@ -136,111 +163,152 @@
 
   propose();
   function propose() {
-    // R1 to R3
-    let nextToCallAfterR1R3Propose = ['sendR3R2Prepare', 'sendR3R1Prepare'];
-    executeAnimate('propose', 'r1_r3', line_r3_r1_timeout, '#greenR1toR3', -180, 244, nextToCallAfterR1R3Propose);
-
     // R1 to R2
     let nextToCallAfterR1R2Propose = ['sendR2R1Prepare', 'sendR2R3Prepare'];
-    executeAnimate('propose', 'r1_r2', line_r1_r2_timeout, '#greenR1toR2', 190, 224, nextToCallAfterR1R2Propose);
+    executeAnimate('propose', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2', 215, 252, nextToCallAfterR1R2Propose);
+
+    // R1 to R3
+    let nextToCallAfterR1R3Propose = ['sendR3R2Prepare', 'sendR3R1Prepare'];
+    executeAnimate('propose', 'r1', 'r3', line_r3_r1_timeout, '#greenR1toR3', -184, 256, nextToCallAfterR1R3Propose);
   }
 
   // Prepare
-    function sendR3R1Prepare(){
-      $('#greenR1toR3').addClass('hide');
-      $('#greenR3toR1').css('background-image', 'url("../misleading.png")');
-      $('#greenR3toR1').removeClass('hide');
+    // R2 -> R1, R3 Prepare
+      function sendR2R1Prepare(){
+        $('#lblcurrentstage').html('Prepare Phase');
+        $('#greenR1toR2').addClass('hide');
+        $('#greenR2toR1').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR2toR1').removeClass('hide');
 
-      let nextToCall = ['sendR3R1Commit', 'sendR1R3Commit'];
-      executeAnimate('prepare', 'r3_r1', line_r3_r1_timeout, '#greenR3toR1', 180, -250, nextToCall);
-    }
-    function sendR3R2Prepare() {
-      $('#greenR3toR2').css('background-image', 'url("../misleading.png")');
-      $('#greenR3toR2').removeClass('hide');
-      let nextToCall = ['sendR2R3Commit'];
-      executeAnimate('prepare', 'r3_r2', line_r2_r3_timeout, '#greenR3toR2', 455, 0, nextToCall);
-    }
+        let nextToCall = []; //['sendR2R1Commit', 'sendR1R2Commit'];
+        executeAnimate('prepare', 'r2', 'r1', line_r1_r2_timeout, '#greenR2toR1', -230, -245, nextToCall);
+      }
+      function sendR2R3Prepare(){
+        $('#greenR2toR3').removeClass('hide');
+        $('#greenR2toR3').css('background-image', 'url("./resources/img/misleading.png")');
+        let nextToCall = []; //['sendR3R2Commit'];
+        executeAnimate('prepare', 'r2', 'r3', line_r2_r3_timeout, '#greenR2toR3', -455, 0, nextToCall);
+      }
 
-    function sendR2R1Prepare(){
-      $('#greenR1toR2').addClass('hide');
-      $('#greenR2toR1').css('background-image', 'url("../misleading.png")');
-      $('#greenR2toR1').removeClass('hide');
+    // R3 -> R1, R2 Prepare
+      function sendR3R1Prepare(){
+        $('#greenR1toR3').addClass('hide');
+        $('#greenR3toR1').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR3toR1').removeClass('hide');
 
-      let nextToCall = ['sendR2R1Commit', 'sendR1R2Commit'];
-      executeAnimate('prepare', 'r2_r1', line_r1_r2_timeout, '#greenR2toR1', -230, -245, nextToCall);
-    }
-    function sendR2R3Prepare(){
-      $('#greenR2toR3').css('background-image', 'url("../misleading.png")');
-      $('#greenR2toR3').removeClass('hide');
-      let nextToCall = ['sendR3R2Commit'];
-      executeAnimate('prepare', 'r2_r3', line_r2_r3_timeout, '#greenR2toR3', -455, 0, nextToCall);
-    }
+        let nextToCall = []; //['sendR3R1Commit', 'sendR1R3Commit'];
+        executeAnimate('prepare', 'r3', 'r1', line_r3_r1_timeout, '#greenR3toR1', 180, -250, nextToCall);
+      }
+      function sendR3R2Prepare() {
+        $('#greenR3toR2').removeClass('hide');
+        $('#greenR3toR2').css('background-image', 'url("./resources/img/misleading.png")');
+        let nextToCall = []; //['sendR2R3Commit'];
+        executeAnimate('prepare', 'r3', 'r2', line_r2_r3_timeout, '#greenR3toR2', 455, 0, nextToCall);
+      }
     
   // Commit
-    function sendR1R3Commit() {
-      // R1 to R3
-      $('#greenR1toR3').css('transform', "");
-      $('#greenR1toR3').removeClass('hide');
-      $('#greenR1toR3').css('background-image', 'url("../correctEvil.png")');
-      executeAnimate('commit', 'r1_r3', line_r3_r1_timeout, '#greenR1toR3', -180, 244, '');
-    }
-    function sendR3R1Commit(){
-      // R3 to R1
-      $('#greenR3toR1').css('transform', "");
-      $('#greenR3toR1').css('background-image', 'url("../misleadingAngel.png")');
-      // $('#greenR3toR1').removeClass('hide');
-      executeAnimate('commit', 'r3_r1', line_r3_r1_timeout, '#greenR3toR1', 180, -250, '');
-    }
+    // R1 -> R2, R3 Commit
+      function sendR1R2Commit() {
+        $('#lblcurrentstage').html('Commit Phase');
+        // R1 to R2
+        $('#greenR1toR2_commit').removeClass('hide');
+        $('#greenR1toR2_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2_commit', 215, 252, '');
+      }
+      function sendR1R3Commit() {
+        // R1 to R3
+        $('#greenR1toR3_commit').removeClass('hide');
+        $('#greenR1toR3_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r1', 'r3', line_r3_r1_timeout, '#greenR1toR3_commit', -184, 256, '');
+      }
 
-    function sendR1R2Commit() {
-      // R1 to R2
-      $('#greenR1toR2').css('transform', "");
-      $('#greenR1toR2').removeClass('hide');
-      $('#greenR1toR2').css('background-image', 'url("../correctEvil.png")');
-      executeAnimate('commit', 'r1_r2', line_r1_r2_timeout, '#greenR1toR2', 190, 224, '');
-    }
-    function sendR2R1Commit(){
-      // R2 to R1
-      $('#greenR2toR1').css('transform', "");
-      $('#greenR2toR1').css('background-image', 'url("../misleadingAngel.png")');
-      executeAnimate('commit', 'r2_r1', line_r1_r2_timeout, '#greenR2toR1', -230, -245, '');
-    }
+    // R2 -> R1, R3 Commit
+      function sendR2R1Commit(){
+        // R2 to R1
+        $('#greenR2toR1_commit').removeClass('hide');
+        $('#greenR2toR1_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r2', 'r1', line_r1_r2_timeout, '#greenR2toR1_commit', -230, -245, '');
+      }
+      function sendR2R3Commit(){
+        // R3 to R2
+        $('#greenR2toR3_commit').removeClass('hide');
+        $('#greenR2toR3_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r2', 'r3', line_r2_r3_timeout, '#greenR2toR3_commit', -455, 0, '');
+      }
 
-    function sendR2R3Commit(){
-      // R3 to R2
-      $('#greenR3toR2').css('top', "475px");
-      $('#greenR3toR2').css('left', "625px");
-
-      $('#greenR3toR2').css('transform', "");
-      $('#greenR3toR2').css('background-image', 'url("../misleadingAngel.png")');
-      executeAnimate('commit', 'r2_r3', line_r2_r3_timeout, '#greenR3toR2', -455, 0, '');
-    }
-    function sendR3R2Commit(){
-      // R3 to R2
-      $('#greenR2toR3').css('top', "475px");
-      $('#greenR2toR3').css('left', "170px");
-      $('#greenR2toR3').css('transform', "");
-      $('#greenR2toR3').css('background-image', 'url("../misleadingAngel.png")');
-
-      executeAnimate('commit', 'r3_r2', line_r2_r3_timeout, '#greenR2toR3', 455, 0, '');
-    }
+    // R3 -> R1, R2 Commit
+      function sendR3R1Commit(){
+        // R3 to R1
+        $('#greenR3toR1_commit').removeClass('hide');
+        $('#greenR3toR1_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r3', 'r1', line_r3_r1_timeout, '#greenR3toR1_commit', 180, -250, '');
+      }
+      function sendR3R2Commit(){
+        // R3 to R2
+        $('#greenR3toR2_commit').removeClass('hide');
+        $('#greenR3toR2_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r3', 'r2', line_r2_r3_timeout, '#greenR3toR2_commit', 455, 0, '');
+      }
 
   // Central
-    function executeAnimate(message_type, link, timeout, targets, translateX, translateY, nextToCall) {
+    function executeAnimate(message_type, from, to, timeout, targets, translateX, translateY, nextToCall) {
       anime.timeline({
         easing: 'linear',
         duration: timeout,
         begin: function(anim) {
           // console.log("began : " + anim.began);
+          // if(message_type == 'commit'){
+          //   let x1 = checkReceivedMajority(processed, message_type, to);
+          //   if(x1){
+          //     anim.play();
+          //   } else {
+          //     anim.pause();
+          //   }
+          // }
         },
         complete: function(anim) {
-          let x = { 'link': link, 'done': true };
+          // r2_r3_commit_processed = true;
+          // processed.push({'message_type': message_type, 'link': link, 'done': true});
+
+          let x = { 'message_type': message_type, 'from': from, 'to': to, 'done': true };
           processed[message_type].push(x);
           console.log(processed);
 
-          $.each( nextToCall, function( key, value ) {
-            window[value]();
-          });
+          if(message_type == 'prepare'){
+            $(targets).addClass('hide');
+
+            let x1 = checkReceivedMajority(processed, message_type, to);
+
+            if(x1){
+              console.log(to+" got majority votes in "+from+"-"+to+" cycle");
+              let next_message_type = 'commit';
+              let already_commit = checkIfCommitDone(processed, next_message_type, from, to);
+              console.log('Log entry of commit from '+from+'-'+to+' is: '+already_commit);
+              if(!already_commit){
+                let nextToCall1 = [];
+                if(to == 'r1'){
+                  nextToCall1 = ['sendR1R3Commit', 'sendR1R2Commit'];
+                } else if(to == 'r2'){
+                  nextToCall1 = ['sendR2R3Commit', 'sendR2R1Commit'];
+                } else if(to == 'r3'){
+                  nextToCall1 = ['sendR3R1Commit', 'sendR3R2Commit'];
+                }
+                $.each( nextToCall1, function( key, value ) {
+                  window[value]();
+                });
+              }
+            } else {
+              console.log(to+" ---DID NOT --- GOT majority votes in "+from+"-"+to+" cycle");
+            }
+          } else {
+            $.each( nextToCall, function( key, value ) {
+              window[value]();
+            });
+          }
+          if(targets == '#greenR2toR3_commit'){
+            $('#lblcurrentstage').css('background', 'red');
+            $('#lblcurrentstage').html('Rejected!');
+          }
         }
       }).add({
         targets: targets,
@@ -248,14 +316,34 @@
         translateY: translateY,
       });
     }
-    
-  // $('.play').on('click', function() {
-  //   console.log('Playing');
-  //   t1.play();
-  // });
-  // $('.pause').on('click', function() {
-  //   console.log('Paused');
-  //   t1.pause();
-  // });
+    function checkReceivedMajority(processed, message_type, to) {
+      let match_count = 1; // self vote
+      $.each( processed[message_type], function( key, value ) {
+        if(value.to == to){
+          match_count++;
+        }
+      });
+      if(match_count >= 2){
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function checkIfCommitDone(processed, message_type, to, from) {
+      let nmatch_count = 0;
+      $.each( processed[message_type], function( key, value ) {
+      // $.each( message_data, function( key, value ) {
+        if( (value.from == from) ){
+          nmatch_count++;
+        }
+      });
+      if(nmatch_count >= 1){
+        // console.log('already message_type: '+message_type+' from: '+from);
+        return true;
+      } else {
+        // console.log('message_type: '+message_type+' from: '+from);
+        return false;
+      }
+    }
 </script>
 </html>

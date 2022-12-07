@@ -1,0 +1,46 @@
+.hide{
+  display: none;
+}
+section{
+  position: absolute;
+  top: -60px;
+  left: -40px;
+}
+button, #clickMe{
+  z-index: 5;
+  position: relative;
+}
+#lblcurrentstage{
+  position: absolute;
+  z-index: 6;
+  top: 78%;
+  left: 0;
+  font-size: 25px;
+  text-align: center;
+  width: 97%;
+  padding: 15px;
+  background: #ff70f0;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+}
+.common_green {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  /*background: #000;*/
+  background-image: url('../img/correct.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 5;
+}
+
+/*slider*/
+  .blkspeed{
+    position: absolute;
+    z-index: 10;
+    left: 50px;
+    top: 200px;
+    width: 26%;
+  }
+/*slider ends*/

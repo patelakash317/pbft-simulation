@@ -1,0 +1,23 @@
+- Network of 5 nodes
+3f + 1 
+assume f value and match with total number of nodes in the network.
+3x1.3 + 1 = 4.9 -> taking upper bound -> 5 (so f = 1.3)
+=> f = 1.3
+
+- 2f + 1 - minimum non-faulty correct 
+- putting f = 1.3 in requirement of minimum non-faulty correct will come up with 4 messages which are needed to be correct in order to proceed further
+=> 4 minimum correct message
+
+----------------------------------------------
+
+4 nodes
+3f + 1 ==> f = 1
+
+- 2f + 1 => 3
+
+---------------------
+
+3 nodes
+3f + 1 ==> f = 0.7
+
+- 2f + 1 => 2.4 => 2

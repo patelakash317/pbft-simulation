@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link href="./resources/css/common.css" rel="stylesheet">
+  <style type="text/css">
+    /*// R1 -> R2, R3, R4, R5 Propose*/
+      #greenR1toR2, #greenR1toR2_commit{
+        top: 147px;
+        left: 345px;
+      }
+      #greenR1toR3, #greenR1toR3_commit{
+        top: 147px;
+        left: 461px;
+      }
+      #greenR1toR4, #greenR1toR4_commit{
+        top: 179px;
+        left: 380px;
+      }
+      #greenR1toR5, #greenR1toR5_commit{
+        top: 179px;
+        left: 424px;
+      }
+      
+    /*// R2 -> R1, R3, R4, R5 Prepare*/
+      #greenR2toR1, #greenR2toR1_commit{
+        top: 236px;
+        left: 188px;
+      }
+      #greenR2toR3, #greenR2toR3_commit{
+        top: 257px;
+        left: 196px;
+      }
+      #greenR2toR4, #greenR2toR4_commit{
+        top: 325px;
+        left: 171px;
+      }
+      #greenR2toR5, #greenR2toR5_commit{
+        top: 285px;
+        left: 196px;
+      }
+
+    /*// R3 -> R1, R2, R4, R5 Prepare*/
+      #greenR3toR1, #greenR3toR1_commit{
+        top: 236px;
+        left: 616px;
+      }
+      #greenR3toR2, #greenR3toR2_commit{
+        top: 256px;
+        left: 611px;
+      }
+      #greenR3toR4, #greenR3toR4_commit{
+        top: 285px;
+        left: 611px;
+      }
+      #greenR3toR5, #greenR3toR5_commit{
+        top: 325px;
+        left: 643px;
+      }
+
+    /*// R4 -> R1, R2, R3, R5 Prepare*/
+      #greenR4toR1, #greenR4toR1_commit{
+        top: 417px;
+        left: 295px;
+      }
+      #greenR4toR2, #greenR4toR2_commit{
+        top: 421px;
+        left: 237px;
+      }
+      #greenR4toR3, #greenR4toR3_commit{
+        top: 423px;
+        left: 316px;
+      }
+      #greenR4toR5, #greenR4toR5_commit{
+        top: 455px;
+        left: 346px;
+      }
+
+    /*// R5 -> R1, R2, R3, R4 Prepare*/
+      #greenR5toR1, #greenR5toR1_commit{
+        top: 418px;
+        left: 563px;
+      }
+      #greenR5toR2, #greenR5toR2_commit{
+        top: 418px;
+        left: 541px;
+      }
+      #greenR5toR3, #greenR5toR3_commit{
+        top: 423px;
+        left: 597px;
+      }
+      #greenR5toR4, #greenR5toR4_commit{
+        top: 455px;
+        left: 487px;
+      }
+    
+    /*Nodes*/
+      .img1{
+        position: absolute;
+        top: 16%;
+        left: 50%;
+      }
+      .img2{
+        position: absolute;
+        /*top: 68%;
+        left: 8.5%;*/
+        top: 35%;
+        left: 15%;
+      }
+      .img3{
+        position: absolute;
+        /*top: 67%;
+        left: 48%;*/
+        top: 35%;
+        right: 22px;
+      }
+      .img4{
+        position: absolute;
+        top: 60%;
+        left: 35%;
+      }
+      .img5{
+        position: absolute;
+        top: 60%;
+        right: 20%;
+      }
+    /*Nodes ends*/
+
+    /*Other*/
+      .motion-path-demo.a2a, .motion-path-demo.a3a, .motion-path-demo.a4a, .motion-path-demo.a5a, .motion-path-demo.a6a, .motion-path-demo.a7a, .motion-path-demo.a8a, .motion-path-demo.a9a, .motion-path-demo.a10a{
+        position: absolute;
+        background: transparent;
+        left: 7px;
+      }
+    /*Other ends*/
+  </style>
+</head>
+<body>
+  <section>
+    <!-- replicas -->
+      <img class="img1" src="./resources/img/honest_last.png" width="80" width="80">
+      <img class="img2" src="./resources/img/honest_last.png" width="80" width="80">
+      <img class="img3" src="./resources/img/malice_last.png" width="80" width="80">
+      <img class="img4" src="./resources/img/malice_last.png" width="80" width="80">
+      <img class="img5" src="./resources/img/malice_last.png" width="80" width="80">
+    <!-- replicas ends -->
+
+    <!-- <article> -->
+      <!-- links -->
+        <svg class="motion-path-demo" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 194 256 L 367 160"/>
+          <text x="375" y="90" fill="green">Primary node <tspan x="378" y="110">(Replica 1)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 459 155 L 633 257"/>
+          <text x="85" y="350" fill="green">Backup node <tspan x="85" y="370">(Replica 2)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a2a" width="750" height="750" viewBox="0 0 750 750" style="left: 0;">
+          <path fill="none" stroke="#000" d="M 212 273 L 624 274"/>
+          <text x="665" y="350" fill="red">Backup node <tspan x="665" y="370">(Replica 3)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a4a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 600 446 L 657 335"/>
+          <text x="255" y="540" fill="red">Backup node <tspan x="255" y="560">(Replica 4)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a5a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 430 193 L 571 431"/>
+          <text x="520" y="540" fill="red">Backup node <tspan x="520" y="560">(Replica 5)</tspan></text>
+        </svg>
+        <svg class="motion-path-demo a6a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 392 193 L 296 426"/>
+        </svg>
+        <svg class="motion-path-demo a7a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 624 299 L 317 442"/>
+        </svg>
+        <svg class="motion-path-demo a8a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 205 300 L 544 438"/>
+        </svg>
+        <svg class="motion-path-demo a9a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 250 439 L 172 336"/>
+        </svg>
+        <svg class="motion-path-demo a10a" width="750" height="750" viewBox="0 0 750 750">
+          <path fill="none" stroke="#000" d="M 502 471 L 347 471"/>
+        </svg>
+      <!-- links ends -->
+
+      <!-- messages -->
+        <!-- // R1 -> R2, R3, R4, R5 Propose -->
+          <div id="greenR1toR2" class="common_green"></div>
+          <div id="greenR1toR3" class="common_green"></div>
+          <div id="greenR1toR4" class="common_green"></div>
+          <div id="greenR1toR5" class="common_green"></div>
+          <div id="greenR1toR2_commit" class="hide common_green"></div>
+          <div id="greenR1toR3_commit" class="hide common_green"></div>
+          <div id="greenR1toR4_commit" class="hide common_green"></div>
+          <div id="greenR1toR5_commit" class="hide common_green"></div>
+
+        <!-- // R2 -> R1, R3, R4, R5 Prepare -->
+          <div id="greenR2toR1" class="hide common_green"></div>
+          <div id="greenR2toR3" class="hide common_green"></div>
+          <div id="greenR2toR4" class="hide common_green"></div>
+          <div id="greenR2toR5" class="hide common_green"></div>
+          <div id="greenR2toR1_commit" class="hide common_green"></div>
+          <div id="greenR2toR3_commit" class="hide common_green"></div>
+          <div id="greenR2toR4_commit" class="hide common_green"></div>
+          <div id="greenR2toR5_commit" class="hide common_green"></div>
+
+        <!-- // R3 -> R1, R2, R4, R5 Prepare -->
+          <div id="greenR3toR1" class="hide common_green"></div>
+          <div id="greenR3toR2" class="hide common_green"></div>
+          <div id="greenR3toR4" class="hide common_green"></div>
+          <div id="greenR3toR5" class="hide common_green"></div>
+          <div id="greenR3toR1_commit" class="hide common_green"></div>
+          <div id="greenR3toR2_commit" class="hide common_green"></div>
+          <div id="greenR3toR4_commit" class="hide common_green"></div>
+          <div id="greenR3toR5_commit" class="hide common_green"></div>
+
+        <!-- // R4 -> R1, R2, R3, R5 Prepare -->
+          <div id="greenR4toR1" class="hide common_green"></div>
+          <div id="greenR4toR2" class="hide common_green"></div>
+          <div id="greenR4toR3" class="hide common_green"></div>
+          <div id="greenR4toR5" class="hide common_green"></div>
+          <div id="greenR4toR1_commit" class="hide common_green"></div>
+          <div id="greenR4toR2_commit" class="hide common_green"></div>
+          <div id="greenR4toR3_commit" class="hide common_green"></div>
+          <div id="greenR4toR5_commit" class="hide common_green"></div>
+
+        <!-- // R5 -> R1, R2, R3, R4 Prepare -->
+          <div id="greenR5toR1" class="hide common_green"></div>
+          <div id="greenR5toR2" class="hide common_green"></div>
+          <div id="greenR5toR3" class="hide common_green"></div>
+          <div id="greenR5toR4" class="hide common_green"></div>
+          <div id="greenR5toR1_commit" class="hide common_green"></div>
+          <div id="greenR5toR2_commit" class="hide common_green"></div>
+          <div id="greenR5toR3_commit" class="hide common_green"></div>
+          <div id="greenR5toR4_commit" class="hide common_green"></div>
+
+      <!-- messages ends -->
+    <!-- </article> -->
+      <div id="lblcurrentstage">PrePrepare Phase</div>
+  </section>
+  <!-- <div id="controls">
+    <button class="play">Play</button>
+    <button class="pause">Pause</button>
+  </div> -->
+</body>
+
+<script src="./resources/js/jquery.min.js"></script>
+<script src="./resources/js/anime.min.js"></script>
+
+<script type="text/javascript">
+  const line_r1_r2_timeout = 2000;
+  const line_r1_r3_timeout = 2000;
+  const line_r1_r4_timeout = 2000;
+  const line_r1_r5_timeout = 2000;
+
+  const line_r2_r3_timeout = 5000;
+  const line_r2_r4_timeout = 2000;
+  const line_r2_r5_timeout = 2000;
+
+  const line_r3_r4_timeout = 2000;
+  const line_r3_r5_timeout = 2000;
+
+  const line_r4_r5_timeout = 2000;
+
+  var processed = { // for logs
+    propose: [],
+    prepare: [], 
+    commit: []
+  };
+
+  propose();
+  // R1 -> R2, R3, R4, R5 Propose
+  function propose() {
+    // R1 to R2
+      let nextToCallAfterR1R2Propose = ['sendR2R1Prepare', 'sendR2R3Prepare', 'sendR2R4Prepare', 'sendR2R5Prepare'];
+      executeAnimate('propose', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2', -157, 89, nextToCallAfterR1R2Propose);
+
+    // R1 to R3
+      let nextToCallAfterR1R3Propose = ['sendR3R1Prepare', 'sendR3R2Prepare', 'sendR3R4Prepare', 'sendR3R5Prepare'];
+      executeAnimate('propose', 'r1', 'r3', line_r1_r3_timeout, '#greenR1toR3', 155, 89, nextToCallAfterR1R3Propose);
+
+    // R1 to R4
+      let nextToCallAfterR1R4Propose = ['sendR4R1Prepare', 'sendR4R2Prepare', 'sendR4R3Prepare', 'sendR4R5Prepare'];
+      executeAnimate('propose', 'r1', 'r4', line_r1_r4_timeout, '#greenR1toR4', -92, 228, nextToCallAfterR1R4Propose);
+
+    // R1 to R5
+      let nextToCallAfterR1R5Propose = ['sendR5R1Prepare', 'sendR5R2Prepare', 'sendR5R3Prepare', 'sendR5R4Prepare'];
+      executeAnimate('propose', 'r1', 'r5', line_r1_r5_timeout, '#greenR1toR5', 134, 229, nextToCallAfterR1R5Propose);
+  }
+
+  // Prepare
+    // R2 -> R1, R3, R4, R5 Prepare
+      function sendR2R1Prepare(){
+        $('#lblcurrentstage').html('Prepare Phase');
+        $('#greenR1toR2').addClass('hide');
+        $('#greenR2toR1').css('background-image', 'url("./resources/img/correct.png")');
+        $('#greenR2toR1').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r2', 'r1', line_r1_r2_timeout, '#greenR2toR1', 151, -83, nextToCall);
+      }
+      function sendR2R3Prepare(){
+        $('#greenR2toR3').css('background-image', 'url("./resources/img/correct.png")');
+        $('#greenR2toR3').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r2', 'r3', line_r2_r3_timeout, '#greenR2toR3', 415, 0, nextToCall);
+      }
+      function sendR2R4Prepare(){
+        $('#greenR2toR4').css('background-image', 'url("./resources/img/correct.png")');
+        $('#greenR2toR4').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r2', 'r4', line_r2_r4_timeout, '#greenR2toR4', 67, 93, nextToCall);
+      }
+      function sendR2R5Prepare(){
+        $('#greenR2toR5').css('background-image', 'url("./resources/img/correct.png")');
+        $('#greenR2toR5').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r2', 'r5', line_r2_r5_timeout, '#greenR2toR5', 344, 133, nextToCall);
+      }
+
+    // R3 -> R1, R2, R4, R5 Prepare
+      function sendR3R1Prepare(){
+        $('#greenR1toR3').addClass('hide');
+        $('#greenR3toR1').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR3toR1').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit', 'sendR1R5Commit'];
+        executeAnimate('prepare', 'r2', 'r1', line_r1_r3_timeout, '#greenR3toR1', -158, -91, nextToCall);
+      }
+      function sendR3R2Prepare(){
+        $('#greenR3toR2').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR3toR2').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r2', 'r2', line_r2_r3_timeout, '#greenR3toR2', -415, 0, nextToCall);
+      }
+      function sendR3R4Prepare(){
+        $('#greenR3toR4').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR3toR4').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r2', 'r4', line_r3_r4_timeout, '#greenR3toR4', -292, 138, nextToCall);
+      }
+      function sendR3R5Prepare(){
+        $('#greenR3toR5').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR3toR5').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r2', 'r5', line_r3_r5_timeout, '#greenR3toR5', -47, 100, nextToCall);
+      }
+
+    // R4 -> R1, R2, R3, R5 Prepare
+      function sendR4R1Prepare(){
+        $('#greenR1toR4').addClass('hide');
+        $('#greenR4toR1').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR4toR1').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r4', 'r1', line_r1_r4_timeout, '#greenR4toR1', 86, -231, nextToCall);
+      }
+      function sendR4R2Prepare(){
+        $('#greenR4toR2').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR4toR2').removeClass('hide');
+
+        let nextToCall = []; //['sendR2R1Commit', 'sendR2R3Commit', 'sendR2R4Commit', 'sendR2R5Commit'];
+        executeAnimate('prepare', 'r4', 'r2', line_r2_r4_timeout, '#greenR4toR2', -68, -96, nextToCall);
+      }
+      function sendR4R3Prepare(){
+        $('#greenR4toR3').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR4toR3').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r4', 'r3', line_r3_r4_timeout, '#greenR4toR3', 300, -138, nextToCall);
+      }
+      function sendR4R5Prepare(){
+        $('#greenR4toR5').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR4toR5').removeClass('hide');
+
+        let nextToCall = []; //['sendR5R1Commit', 'sendR5R2Commit', 'sendR5R3Commit', 'sendR5R4Commit'];
+        executeAnimate('prepare', 'r4', 'r5', line_r4_r5_timeout, '#greenR4toR5', 136, 0, nextToCall);
+      }
+
+    // R5 -> R1, R2, R3, R4 Prepare
+      function sendR5R1Prepare(){
+        $('#greenR1toR5').addClass('hide');
+        $('#greenR5toR1').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR5toR1').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r5', 'r1', line_r1_r5_timeout, '#greenR5toR1', -137, -228, nextToCall);
+      }
+      function sendR5R2Prepare(){
+        $('#greenR5toR2').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR5toR2').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('prepare', 'r5', 'r2', line_r2_r5_timeout, '#greenR5toR2', -345, -133, nextToCall);
+      }
+      function sendR5R3Prepare(){
+        $('#greenR5toR3').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR5toR3').removeClass('hide');
+
+        let nextToCall = []; //['sendR3R1Commit', 'sendR3R2Commit', 'sendR3R4Commit', 'sendR3R5Commit'];
+        executeAnimate('prepare', 'r5', 'r3', line_r3_r5_timeout, '#greenR5toR3', 48, -95, nextToCall);
+      }
+      function sendR5R4Prepare(){
+        $('#greenR5toR4').css('background-image', 'url("./resources/img/misleading.png")');
+        $('#greenR5toR4').removeClass('hide');
+
+        let nextToCall = []; //['sendR4R1Commit', 'sendR4R2Commit', 'sendR4R3Commit', 'sendR4R5Commit'];
+        executeAnimate('prepare', 'r5', 'r4', line_r4_r5_timeout, '#greenR5toR4', -136, 0, nextToCall);
+      }
+
+  // Commit
+    // R1 -> R2, R3, R4, R5 Commit
+      function sendR1R2Commit() {
+        $('#lblcurrentstage').html('Commit Phase');
+        // R1 to R2
+        // $('#greenR1toR2').css('transform', "");
+        $('#greenR1toR2_commit').removeClass('hide');
+        $('#greenR1toR2_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r1', 'r2', line_r1_r2_timeout, '#greenR1toR2_commit', -157, 89, '');
+      }
+      function sendR1R3Commit() {
+        // R1 to R3
+        // $('#greenR1toR2').css('transform', "");
+        $('#greenR1toR3_commit').removeClass('hide');
+        $('#greenR1toR3_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r1', 'r3', line_r1_r3_timeout, '#greenR1toR3_commit', 155, 89, '');
+      }
+      function sendR1R4Commit() {
+        // R1 to R4
+        // $('#greenR1toR2').css('transform', "");
+        $('#greenR1toR4_commit').removeClass('hide');
+        $('#greenR1toR4_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r1', 'r4', line_r1_r4_timeout, '#greenR1toR4_commit', -92, 228, '');
+      }
+      function sendR1R5Commit() {
+        // R1 to R5
+        // $('#greenR1toR2').css('transform', "");
+        $('#greenR1toR5_commit').removeClass('hide');
+        $('#greenR1toR5_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r1', 'r5', line_r1_r5_timeout, '#greenR1toR5_commit', 134, 229, '');
+      }
+
+    // R2 -> R1, R3, R4, R5 Commit
+      function sendR2R1Commit() {
+        // R2 to R1
+        // $('#greenR1toR2').css('transform', "");
+        $('#greenR2toR1_commit').removeClass('hide');
+        $('#greenR2toR1_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r2', 'r2', line_r1_r2_timeout, '#greenR2toR1_commit', 151, -83, '');
+      }
+      function sendR2R3Commit() {
+        // R2 to R3
+        // $('#greenR2toR2').css('transform', "");
+        $('#greenR2toR3_commit').removeClass('hide');
+        $('#greenR2toR3_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r2', 'r3', line_r2_r3_timeout, '#greenR2toR3_commit', 415, 0, '');
+      }
+      function sendR2R4Commit() {
+        // R2 to R4
+        // $('#greenR2toR2').css('transform', "");
+        $('#greenR2toR4_commit').removeClass('hide');
+        $('#greenR2toR4_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r2', 'r4', line_r2_r4_timeout, '#greenR2toR4_commit', 67, 93, '');
+      }
+      function sendR2R5Commit() {
+        // R2 to R5
+        // $('#greenR2toR2').css('transform', "");
+        $('#greenR2toR5_commit').removeClass('hide');
+        $('#greenR2toR5_commit').css('background-image', 'url("./resources/img/correctEvil.png")');
+        executeAnimate('commit', 'r2', 'r5', line_r2_r5_timeout, '#greenR2toR5_commit', 344, 133, '');
+      }
+
+    // R3 -> R1, R2, R4, R5 Commit
+      function sendR3R1Commit() {
+        // R3 to R1
+        // $('#greenR1toR2').css('transform', "");
+        $('#greenR3toR1_commit').removeClass('hide');
+        $('#greenR3toR1_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r3', 'r1', line_r1_r3_timeout, '#greenR3toR1_commit', -158, -91, '');
+      }
+      function sendR3R2Commit() {
+        // R3 to R2
+        // $('#greenR3toR2').css('transform', "");
+        $('#greenR3toR2_commit').removeClass('hide');
+        $('#greenR3toR2_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r3', 'r2', line_r2_r3_timeout, '#greenR3toR2_commit', -415, 0, '');
+      }
+      function sendR3R4Commit() {
+        // R3 to R4
+        // $('#greenR3toR2').css('transform', "");
+        $('#greenR3toR4_commit').removeClass('hide');
+        $('#greenR3toR4_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r3', 'r4', line_r3_r4_timeout, '#greenR3toR4_commit', -292, 138, '');
+      }
+      function sendR3R5Commit() {
+        // R3 to R5
+        // $('#greenR3toR2').css('transform', "");
+        $('#greenR3toR5_commit').removeClass('hide');
+        $('#greenR3toR5_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        executeAnimate('commit', 'r3', 'r5', line_r3_r5_timeout, '#greenR3toR5_commit', -47, 100, '');
+      }
+
+    // R4 -> R1, R2, R3, R5 Commit
+      function sendR4R1Commit(){
+        $('#greenR4toR1_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR4toR1_commit').removeClass('hide');
+
+        executeAnimate('commit', 'r4', 'r1', line_r1_r4_timeout, '#greenR4toR1_commit', 86, -231, '');
+      }
+      function sendR4R2Commit(){
+        $('#greenR4toR2_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR4toR2_commit').removeClass('hide');
+
+        executeAnimate('commit', 'r4', 'r2', line_r2_r4_timeout, '#greenR4toR2_commit', -68, -96, '');
+      }
+      function sendR4R3Commit(){
+        $('#greenR4toR3_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR4toR3_commit').removeClass('hide');
+
+        executeAnimate('commit', 'r4', 'r3', line_r3_r4_timeout, '#greenR4toR3_commit', 300, -138, '');
+      }
+      function sendR4R5Commit(){
+        $('#greenR4toR5_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR4toR5_commit').removeClass('hide');
+
+        executeAnimate('commit', 'r4', 'r5', line_r4_r5_timeout, '#greenR4toR5_commit', 136, 0, '');
+      }
+
+    // R5 -> R1, R2, R3, R4 Commit
+      function sendR5R1Commit(){
+        $('#greenR5toR1_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR5toR1_commit').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('commit', 'r5', 'r1', line_r1_r5_timeout, '#greenR5toR1_commit', -137, -228, nextToCall);
+      }
+      function sendR5R2Commit(){
+        $('#greenR5toR2_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR5toR2_commit').removeClass('hide');
+
+        let nextToCall = []; //['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit'];
+        executeAnimate('commit', 'r5', 'r2', line_r2_r5_timeout, '#greenR5toR2_commit', -345, -133, nextToCall);
+      }
+      function sendR5R3Commit(){
+        $('#greenR5toR3_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR5toR3_commit').removeClass('hide');
+
+        let nextToCall = []; //['sendR3R1Commit', 'sendR3R2Commit', 'sendR3R4Commit', 'sendR3R5Commit'];
+        executeAnimate('commit', 'r5', 'r3', line_r3_r5_timeout, '#greenR5toR3_commit', 48, -95, nextToCall);
+      }
+      function sendR5R4Commit(){
+        $('#greenR5toR4_commit').css('background-image', 'url("./resources/img/misleadingAngel.png")');
+        $('#greenR5toR4_commit').removeClass('hide');
+
+        let nextToCall = []; //['sendR4R1Commit', 'sendR4R2Commit', 'sendR4R3Commit', 'sendR4R5Commit'];
+        executeAnimate('commit', 'r5', 'r4', line_r4_r5_timeout, '#greenR5toR4_commit', -136, 0, nextToCall);
+      }
+
+  // Central
+    function executeAnimate(message_type, from, to, timeout, targets, translateX, translateY, nextToCall) {
+      anime.timeline({
+        easing: 'linear',
+        duration: timeout,
+        begin: function(anim) {
+          // console.log("began : " + anim.began);
+          // if(message_type == 'commit'){
+          //   let x1 = checkReceivedMajority(processed, message_type, to);
+          //   if(x1){
+          //     anim.play();
+          //   } else {
+          //     anim.pause();
+          //   }
+          // }
+        },
+        complete: function(anim) {
+          // r2_r3_commit_processed = true;
+          // processed.push({'message_type': message_type, 'link': link, 'done': true});
+
+          let x = { 'message_type': message_type, 'from': from, 'to': to, 'done': true };
+          processed[message_type].push(x);
+          console.log(processed);
+
+          if(message_type == 'prepare'){
+            $(targets).addClass('hide');
+
+            let x1 = checkReceivedMajority(processed, message_type, to);
+            
+            if(x1){
+              console.log(to+" got majority votes in "+from+"-"+to+" cycle");
+              let next_message_type = 'commit';
+              let already_commit = checkIfCommitDone(processed, next_message_type, from, to);
+              console.log('Log entry of commit from '+from+'-'+to+' is: '+already_commit);
+              if(!already_commit){
+                let nextToCall1 = [];
+                if(to == 'r1'){
+                  nextToCall1 = ['sendR1R2Commit', 'sendR1R3Commit', 'sendR1R4Commit', 'sendR1R5Commit'];
+                } else if(to == 'r2'){
+                  nextToCall1 = ['sendR2R1Commit', 'sendR2R3Commit', 'sendR2R4Commit', 'sendR2R5Commit'];
+                } else if(to == 'r3'){
+                  nextToCall1 = ['sendR3R1Commit', 'sendR3R2Commit', 'sendR3R4Commit', 'sendR3R5Commit'];
+                } else if(to == 'r4'){
+                  nextToCall1 = ['sendR4R1Commit', 'sendR4R2Commit', 'sendR4R3Commit', 'sendR4R5Commit'];
+                } else if(to == 'r5'){
+                  nextToCall1 = ['sendR5R1Commit', 'sendR5R2Commit', 'sendR5R3Commit', 'sendR5R4Commit'];
+                }
+                $.each( nextToCall1, function( key, value ) {
+                  window[value]();
+                });
+              }
+            } else {
+              console.log(to+" ---DID NOT --- GOT majority votes in "+from+"-"+to+" cycle");
+            }
+          } else {
+            $.each( nextToCall, function( key, value ) {
+              window[value]();
+            });
+          }
+          if(targets == '#greenR3toR2_commit'){
+            $('#lblcurrentstage').css('background', 'red');
+            $('#lblcurrentstage').html('Rejected!');
+          }
+        }
+      }).add({
+        targets: targets,
+        translateX: translateX,
+        translateY: translateY,
+      });
+    }
+    function checkReceivedMajority(processed, message_type, to) {
+      let match_count = 1; // self vote
+      $.each( processed[message_type], function( key, value ) {
+        if(value.to == to){
+          match_count++;
+        }
+      });
+      if(match_count >= 4){
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function checkIfCommitDone(processed, message_type, to, from) {
+      let nmatch_count = 0;
+      $.each( processed[message_type], function( key, value ) {
+      // $.each( message_data, function( key, value ) {
+        if( (value.from == from) ){
+          nmatch_count++;
+        }
+      });
+      if(nmatch_count >= 1){
+        // console.log('already message_type: '+message_type+' from: '+from);
+        return true;
+      } else {
+        // console.log('message_type: '+message_type+' from: '+from);
+        return false;
+      }
+    }
+
+  // $('.play').on('click', function() {
+  //   console.log('Playing');
+  //   t1.play();
+  // });
+  // $('.pause').on('click', function() {
+  //   console.log('Paused');
+  //   t1.pause();
+  // });
+</script>
+</html>
