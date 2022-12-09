@@ -70,7 +70,7 @@
   $('#myRange').on('change', function() {
     line_r1_r2_timeout = $(this).val();
     let me = line_r1_r2_timeout/1000;
-    $('.blkspeed label').html('Speed (R1-R2): '+me+'s');
+    $('.blkspeed label').html('Delay (R1-R2): '+me+'s');
   });
   var processed = { // for logs
     propose: [],

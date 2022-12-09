@@ -141,17 +141,17 @@
   $('#myRange').on('change', function() {
     line_r1_r2_timeout = $(this).val();
     let me = line_r1_r2_timeout/1000;
-    $('.blkspeed label.lblR1R2').html('N/W Speed (R1-R2):<br/>'+me+'s');
+    $('.blkspeed label.lblR1R2').html('Delay (R1-R2):<br/>'+me+'s');
   });
   $('#myRangeR2R3').on('change', function() {
     line_r2_r3_timeout = $(this).val();
     let me2 = line_r2_r3_timeout/1000;
-    $('.blkspeed label.lblR2R3').html('N/W Speed (R2-R3):<br/>'+me2+'s');
+    $('.blkspeed label.lblR2R3').html('Delay (R2-R3):<br/>'+me2+'s');
   });
   $('#myRangeR3R1').on('change', function() {
     line_r3_r1_timeout = $(this).val();
     let me3 = line_r3_r1_timeout/1000;
-    $('.blkspeed label.lblR3R1').html('N/W Speed (R3-R1):<br/>'+me3+'s');
+    $('.blkspeed label.lblR3R1').html('Delay (R3-R1):<br/>'+me3+'s');
   });
 
   var processed = { // for logs
