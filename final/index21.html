@@ -49,13 +49,13 @@
       <div id="greenR1toR2_commit" class="hide common_green"></div>
       <div id="greenR2toR1_commit" class="hide common_green"></div>
     <!-- </article> -->
-      <div class="blkspeed">
-        <label>Delay (R1-R2): 2.5s</label>
-        <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
-      </div>
        <!-- class="slider" -->
       <div id="lblcurrentstage">PrePrepare Phase</div>
   </section>
+  <div class="blkspeed">
+    <label>Delay (R1-R2): 2.5s</label><br/>
+    <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
+  </div>
   <table class="blkflowlog">
     <thead>
       <tr><th scope="col">pBFT Simulation Logs</th></tr>
@@ -83,12 +83,14 @@
 <script src="./resources/js/anime.min.js"></script>
 
 <script type="text/javascript">
-  let line_r1_r2_timeout = 2500;
-  $('#myRange').on('change', function() {
-    line_r1_r2_timeout = $(this).val();
-    let me = line_r1_r2_timeout/1000;
-    $('.blkspeed label').html('Delay (R1-R2): '+me+'s');
-  });
+  // timout 
+    let line_r1_r2_timeout = 2500;
+    $('#myRange').on('change', function() {
+      line_r1_r2_timeout = $(this).val();
+      let me = line_r1_r2_timeout/1000;
+      $('.blkspeed label').html('Delay (R1-R2): '+me+'s');
+    });
+  // timout ends
 
   var processed = { // for logs
     propose: [],

@@ -1,3 +1,6 @@
+html, body{
+  overflow-x: hidden;
+}
 .hide{
   display: none;
 }
@@ -43,8 +46,10 @@ button, #clickMe{
   .blkspeed{
     position: absolute;
     z-index: 10;
-    left: 50px;
-    top: 200px;
+    /*left: 50px;*/
+    /*top: 200px;*/
+    right: -94px;
+    top: 15px;
     width: 26%;
   }
 /*slider ends*/

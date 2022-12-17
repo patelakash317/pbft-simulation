@@ -112,19 +112,19 @@
       <div id="greenR2toR3" class="hide"></div>
       <div id="greenR3toR1" class="hide"></div>
       <div id="greenR2toR1" class="hide"></div> -->
-      <div class="blkspeed">
-        <label class="lblR1R2">Delay (R1-R2):<br/>2s</label><br/>
-        <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
-        <br/>
-        <label class="lblR2R3">Delay (R2-R3):<br/>3s</label><br/>
-        <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR2R3">
-        <br/>
-        <label class="lblR3R1">Delay (R3-R1):<br/>3s</label><br/>
-        <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR3R1">
-      </div>
     <!-- </article> -->
       <div id="lblcurrentstage">PrePrepare Phase</div>
   </section>
+  <div class="blkspeed">
+    <label class="lblR1R2">Delay (R1-R2):<br/>2s</label><br/>
+    <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
+    <br/>
+    <label class="lblR2R3">Delay (R2-R3):<br/>3s</label><br/>
+    <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR2R3">
+    <br/>
+    <label class="lblR3R1">Delay (R3-R1):<br/>3s</label><br/>
+    <input type="range" step="500" min="1000" max="8000" value="3000" id="myRangeR3R1">
+  </div>
   <table class="blkflowlog">
     <thead>
       <tr><th scope="col">pBFT Simulation Logs</th></tr>
@@ -152,24 +152,26 @@
 <script src="./resources/js/anime.min.js"></script>
 
 <script type="text/javascript">
-  let line_r1_r2_timeout = 2000;
-  let line_r2_r3_timeout = 3000;
-  let line_r3_r1_timeout = 3000;
-  $('#myRange').on('change', function() {
-    line_r1_r2_timeout = $(this).val();
-    let me = line_r1_r2_timeout/1000;
-    $('.blkspeed label.lblR1R2').html('Delay (R1-R2):<br/>'+me+'s');
-  });
-  $('#myRangeR2R3').on('change', function() {
-    line_r2_r3_timeout = $(this).val();
-    let me2 = line_r2_r3_timeout/1000;
-    $('.blkspeed label.lblR2R3').html('Delay (R2-R3):<br/>'+me2+'s');
-  });
-  $('#myRangeR3R1').on('change', function() {
-    line_r3_r1_timeout = $(this).val();
-    let me3 = line_r3_r1_timeout/1000;
-    $('.blkspeed label.lblR3R1').html('Delay (R3-R1):<br/>'+me3+'s');
-  });
+  // timout 
+    let line_r1_r2_timeout = 2000;
+    let line_r2_r3_timeout = 3000;
+    let line_r3_r1_timeout = 3000;
+    $('#myRange').on('change', function() {
+      line_r1_r2_timeout = $(this).val();
+      let me = line_r1_r2_timeout/1000;
+      $('.blkspeed label.lblR1R2').html('Delay (R1-R2):<br/>'+me+'s');
+    });
+    $('#myRangeR2R3').on('change', function() {
+      line_r2_r3_timeout = $(this).val();
+      let me2 = line_r2_r3_timeout/1000;
+      $('.blkspeed label.lblR2R3').html('Delay (R2-R3):<br/>'+me2+'s');
+    });
+    $('#myRangeR3R1').on('change', function() {
+      line_r3_r1_timeout = $(this).val();
+      let me3 = line_r3_r1_timeout/1000;
+      $('.blkspeed label.lblR3R1').html('Delay (R3-R1):<br/>'+me3+'s');
+    });
+  // timout ends
 
   var processed = { // for logs
     propose: [],
