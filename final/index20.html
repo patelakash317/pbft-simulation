@@ -56,6 +56,23 @@
        <!-- class="slider" -->
       <div id="lblcurrentstage">PrePrepare Phase</div>
   </section>
+  <table class="blkflowlog">
+    <thead>
+      <tr><th scope="col">Logs</th></tr>
+    </thead>
+    <tbody>
+      <tr><td id="lblnologs" scope="col">No logs exist</td></tr>
+    </tbody>
+  </table>
+  <div class="blkflowlog">
+    <table id="tbltest">
+      <thead>
+        <tr><th scope="col">&nbsp;</th></tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
   <!-- <div id="controls">
     <button class="play">Play</button>
     <button class="pause">Pause</button>
@@ -167,10 +184,12 @@
                   window[value]();
                 });
               }
+              renderLogsTable(from, to, message_type)
             } else {
               console.log(to+" ---DID NOT --- GOT majority votes in "+from+"-"+to+" cycle");
             }
           } else {
+            renderLogsTable(from, to, message_type);
             $.each( nextToCall, function( key, value ) {
               window[value]();
             });
@@ -188,6 +207,24 @@
         translateX: translateX,
         translateY: translateY,
       });
+    }
+    function renderLogsTable(from, to, message_type) {
+      // logs
+        $('#lblnologs').html('');
+        $('#lblnologs').css('border', 'none');
+        let log_message = from.toUpperCase()+to.toUpperCase()+message_type;
+        if($('#'+log_message).length <= 0){
+          let message = '#green'+from.toUpperCase()+'to'+to.toUpperCase();
+          if(message_type == 'commit'){
+            message+="_commit";
+          } else {
+            message = message+".common_green"
+          }
+          let message_image = $(message).css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1');
+
+          $('#tbltest tbody').append('<tr id="'+log_message+'"><td><span class="logmessageicon" style="background-image: url('+message_image+')">&nbsp;</span>&nbsp; &nbsp;'+to.toUpperCase()+' received <b>'+message_type+'</b> message from '+from.toUpperCase()+'</td></tr>');
+        }
+      // logs ends
     }
     function checkReceivedMajority(processed, message_type, to) {
       let match_count = 1; // self vote

@@ -48,3 +48,49 @@ button, #clickMe{
     width: 26%;
   }
 /*slider ends*/
+
+/*logs table*/
+  .logmessageicon{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    background-position: 0 0;
+    background-size: 100% 100%;
+  }
+  td{
+    border: 1px solid #ddd;
+    padding: 6px;
+  } 
+  span.logmessageicon:after {
+    content: " ";
+    margin-left: 25px;
+    position: relative;
+    border-right: 1px solid #ddd;
+    top: -24px;
+    height: 37px;
+    display: block;
+    left: 5px;
+  }
+  .blkflowlog{
+    position: absolute; 
+    left: 735px; 
+    width: 332px;
+    text-align: center;
+    height: 580px;
+    overflow: auto;
+  }
+
+  /*custom scroll*/
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px grey;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 10px;
+    }
+  /*custom scroll ends*/
+/*logs table ends*/
