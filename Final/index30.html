@@ -80,6 +80,7 @@
           <path fill="none" stroke="#000" d="M 198 489 L 638 489"/>
           <text x="655" y="540" fill="green">Backup node <tspan x="655" y="560">(Replica 2)</tspan></text>
         </svg>
+        <span id="fullclock"></span>
         <svg class="motion-path-demo a3a" width="750" height="750" viewBox="0 0 750 750">
           <path fill="none" stroke="#000" d="M 420 185 L 635 428"/>
           <text x="85" y="540" fill="green">Backup node <tspan x="85" y="560">(Replica 3)</tspan></text>
@@ -150,6 +151,66 @@
 
 <script src="./resources/js/jquery.min.js"></script>
 <script src="./resources/js/anime.min.js"></script>
+
+<style type="text/css">
+  #fullclock{
+    position: absolute;
+    top: 417px;
+    left: 84px;
+    z-index: 10;
+  }
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+</style>
+<script type="text/javascript">
+  // TIMEOUT
+  let block_redirecting = 0;
+  var interval;
+  function fullcountdown(element, minutes, seconds) {
+    // set time for the particular countdown
+    var time = minutes*60 + seconds;
+    interval = setInterval(function() {
+      var el = document.getElementById(element);
+      // if the time is 0 then end the counter
+      if (time <= 0) {
+        var text = "<b>Time out</b>"+'&nbsp; &nbsp;';
+        el.innerHTML = text;
+        if(block_redirecting == 0){
+          // setTimeout(function() {
+          //   fullcountdown('fullclock', 0, 5);
+          // }, 5);
+          clearInterval(interval);
+        }
+        block_redirecting = 1;
+        return;
+      }
+      var minutes = Math.floor( time / 60 );
+      if (minutes < 10) minutes = "0" + minutes;
+      var seconds = time % 60;
+      if (seconds < 10) seconds = "0" + seconds; 
+      var text = '<b>Timeout in:</b><br/>' + minutes + ':' + seconds+'s';
+      el.innerHTML = text;
+      time--;
+    }, 1000);
+  }
+
+  // fullcountdown('fullclock', 0, 5);
+</script>
 
 <script type="text/javascript">
   // timout 
@@ -270,6 +331,31 @@
         executeAnimate('commit', 'r3', 'r2', line_r2_r3_timeout, '#greenR3toR2_commit', 455, 0, '');
       }
 
+    // R3 -> R1, R2 Commit Timeout
+      function sendR3R1Commit_timeout(){
+        // R3 to R1
+        $('#greenR3toR1_commit').removeClass('hide');
+        $('#greenR3toR1_commit').css('background-image', 'url("./resources/img/timeout.png")');
+        $('#greenR3toR1_commit').css('background-color', 'red');
+        $('#greenR3toR1_commit').css('border-radius', '15px');
+        $('#greenR3toR1_commit').css('animation', 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both');
+        executeAnimate('timeout', 'r3', 'r1', line_r3_r1_timeout, '#greenR3toR1_commit', 180, -250, '');
+
+        // animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        // transform: translate3d(0, 0, 0);
+        // backface-visibility: hidden;
+        // perspective: 1000px;
+      }
+      function sendR3R2Commit_timeout(){
+        // R3 to R2
+        $('#greenR3toR2_commit').removeClass('hide');
+        $('#greenR3toR2_commit').css('background-image', 'url("./resources/img/timeout.png")');
+        $('#greenR3toR2_commit').css('background-color', 'red');
+        $('#greenR3toR2_commit').css('border-radius', '15px');
+        $('#greenR3toR2_commit').css('animation', 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both');
+        executeAnimate('timeout', 'r3', 'r2', line_r2_r3_timeout, '#greenR3toR2_commit', 455, 0, '');
+      }
+
   // Central
     function executeAnimate(message_type, from, to, timeout, targets, translateX, translateY, nextToCall) {
       anime.timeline({
@@ -294,6 +380,13 @@
           processed[message_type].push(x);
           console.log(processed);
 
+          if(to == 'r3'){
+            console.log('sadfg');
+            if(block_redirecting == 0){
+              clearInterval(interval);
+              fullcountdown('fullclock', 0, 5);
+            }
+          }
           if(message_type == 'prepare'){
             $(targets).addClass('hide');
 
@@ -311,7 +404,11 @@
                 } else if(to == 'r2'){
                   nextToCall1 = ['sendR2R3Commit', 'sendR2R1Commit'];
                 } else if(to == 'r3'){
-                  nextToCall1 = ['sendR3R1Commit', 'sendR3R2Commit'];
+                  if(block_redirecting == 0){
+                    nextToCall1 = ['sendR3R1Commit', 'sendR3R2Commit'];
+                  } else {
+                    nextToCall1 = ['sendR3R1Commit_timeout', 'sendR3R2Commit_timeout'];
+                  }
                 }
                 $.each( nextToCall1, function( key, value ) {
                   window[value]();
