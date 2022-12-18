@@ -52,9 +52,17 @@
        <!-- class="slider" -->
       <div id="lblcurrentstage">PrePrepare Phase</div>
   </section>
-  <div class="blkspeed">
+  <div class="blkspeed" style="right: -75px;">
     <label>Delay (R1-R2): 2.5s</label><br/>
     <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
+
+    <div id="blkstepslogs" class="hide" style="width: 250px; text-align: justify;">
+      <p><b>Steps</b></p>
+      <p id="blkstep1" class="hide">This is the first phase out of 3 phases of PBFT. It is called <b>pre-prepare or proposal phase</b>, the current primary node (R1) announces the next record that the system should agree upon.</p>
+      <p id="blkstep2" class="hide">This is the <b>second stage</b>, every node in the network (in this case R2) receives pre-prepare message sent by the primary node (R1), every node (again R2) validates the correctness of the proposal and multicasts a "<b>prepare message</b>" to the group.</p>
+      <p id="blkstep3" class="hide">This is phase number three where every nodes wait until they collect a quorum of (2f+1) prepare messages and publish this observation with a <b>commit message</b>.</p>
+      <p id="blkstep4" class="hide">Finally, every node wait for a quorum of (2f + 1) <b>commit messages</b> to make sure that enough nodes have recorded the decision.</p>
+    </div>
   </div>
   <table class="blkflowlog">
     <thead>
@@ -92,6 +100,12 @@
     });
   // timout ends
   
+  let x = setTimeout(function() {
+    $('#blkstepslogs').removeClass('hide');
+    $('#blkstep1').removeClass('hide');
+    clearInterval(x);
+  }, 600);
+
   var processed = { // for logs
     propose: [],
     prepare: [], 
@@ -107,6 +121,8 @@
 
   // Prepare
     function sendR2R1Prepare(){
+      $('#blkstep2').removeClass('hide'); // steps log
+
       $('#lblcurrentstage').html('Prepare Phase');
       $('#lblcurrentstage').css('background', 'blue');
       $('#greenR1toR2').addClass('hide');
@@ -136,6 +152,8 @@
     }
     function sendR1R2Commit() {
       // R1 to R2
+      $('#blkstep3').removeClass('hide'); // steps log
+
       $('#greenR1toR2').addClass('hide');
       $('#greenR1toR2_commit').removeClass('hide');
       $('#greenR1toR2_commit').css('background-image', 'url("./resources/img/correctAngel.png")');
@@ -168,6 +186,10 @@
           processed[message_type].push(x);
           console.log(processed);
 
+          if(message_type == 'commit'){
+            $('#blkstep4').removeClass('hide'); // steps log
+          }
+
           if(message_type == 'prepare'){
             $(targets).addClass('hide');
 
@@ -191,6 +213,7 @@
             } else {
               console.log(to+" ---DID NOT --- GOT majority votes in "+from+"-"+to+" cycle");
             }
+
           } else {
             renderLogsTable(from, to, message_type);
             $.each( nextToCall, function( key, value ) {
