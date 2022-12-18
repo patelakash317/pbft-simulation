@@ -55,13 +55,21 @@
   <div class="blkspeed" style="right: -75px;">
     <label>Delay (R1-R2): 2.5s</label><br/>
     <input type="range" step="500" min="1000" max="8000" value="2500" id="myRange">
-
+    <style type="text/css">
+      .infomsg{
+        color: white;
+        padding: 8px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-family: monospace;
+      }
+    </style>
     <div id="blkstepslogs" class="hide" style="width: 250px; text-align: justify;">
       <p><b>Steps</b></p>
-      <p id="blkstep1" class="hide">The first phase of PBFT is called the <b>pre-prepare or proposal phase</b>. In this phase, the current primary node (R1) announces the next record that the system needs to reach agreement on. This phase is one of three phases in the PBFT protocol</p>
-      <p id="blkstep2" class="hide">The second stage of the PBFT protocol involves every node in the network receiving the pre-prepare message sent by the primary node (R1). Each node (in this case, R2) then validates the correctness of the proposal and multicasts a "<b>prepare message</b>" to the group.</p>
-      <p id="blkstep3" class="hide">In the third phase of the PBFT protocol, every node waits until they receive a quorum of (2f+1) prepare messages. Once this occurs, they will publish their observation with a <b>commit message</b>.</p>
-      <p id="blkstep4" class="hide">Finally, every node waits for a quorum of (2f + 1) commit messages to ensure that enough nodes have recorded the decision. This is the last step in the PBFT protocol.</p>
+      <p id="blkstep1" style="color: black; background-color: #ff70f0;" class="hide infomsg">The first phase of PBFT is called the <b>pre-prepare or proposal phase</b>. In this phase, the current primary node (R1) announces the next record that the system needs to reach agreement on. This phase is one of three phases in the PBFT protocol.</p>
+      <p id="blkstep2" style="background-color: blue;" class="hide infomsg">The second stage of the PBFT protocol involves every node in the network receiving the pre-prepare message sent by the primary node (R1). Each node (in this case, R2) then validates the correctness of the proposal and multicasts a "<b>prepare message</b>" to the group.</p>
+      <p id="blkstep3" style="background-color: rgb(128, 0, 35, 0.68);" class="hide infomsg">In the third phase of the PBFT protocol, every node waits until they receive a quorum of (2f+1) prepare messages. Once this occurs, they will publish their observation with a <b>commit message</b>.</p>
+      <p id="blkstep4" style="background-color: green;" class="hide infomsg">Finally, every node waits for a quorum of (2f + 1) commit messages to ensure that enough nodes have recorded the decision. This is the last step in the PBFT protocol.</p>
     </div>
   </div>
   <table class="blkflowlog">
